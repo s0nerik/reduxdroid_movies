@@ -1,0 +1,5 @@
+apply from: "../_module.gradle"
+
+dependencies {
+    implementation Libs.module_basic
+}

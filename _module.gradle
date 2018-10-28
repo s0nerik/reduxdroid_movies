@@ -1,0 +1,29 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlinx-serialization'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion Versions.compile_sdk
+
+    defaultConfig {
+        minSdkVersion Versions.min_sdk
+        targetSdkVersion Versions.target_sdk
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
+dependencies {
+    testImplementation Libs.unitTest
+    androidTestImplementation Libs.androidTest
+}

@@ -1,0 +1,37 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlinx-serialization'
+
+android {
+    compileSdkVersion Versions.compile_sdk
+    defaultConfig {
+        applicationId "com.github.s0nerik.reduxdroid_movies"
+        minSdkVersion Versions.min_sdk
+        targetSdkVersion Versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    packagingOptions {
+        exclude 'META-INF/core_release.kotlin_module'
+    }
+}
+
+dependencies {
+    implementation project(":core")
+
+    testImplementation Libs.unitTest
+    androidTestImplementation Libs.androidTest
+}
