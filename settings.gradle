@@ -1,3 +1,7 @@
-include ':core',
-        ':app',
-        ':model'
+include ":app"
+
+include ":core"
+include ":model"
+include ":auth"
+
+include ":feature_main"
