@@ -31,6 +31,10 @@ android {
 
 dependencies {
     implementation project(":core")
+    implementation project(":auth")
+    implementation project(":feature_main")
+
+    implementation "me.tatarka.redux:redux-android:0.10"
 
     testImplementation Libs.unitTest
     androidTestImplementation Libs.androidTest

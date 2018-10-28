@@ -9,8 +9,11 @@ import com.github.s0nerik.reduxdroid.activity_result.ActivityResultMiddleware
 import com.github.s0nerik.reduxdroid.navigation.middleware.NavigationMiddleware
 import com.github.s0nerik.reduxdroid.state_serializer.AppStateSerializer
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+class AppActivity : AppCompatActivity() {
+    private val vm: AppViewModel by viewModel()
+
     private val navMiddleware: NavigationMiddleware by inject()
 
     private val stateSerializer: AppStateSerializer by inject()
@@ -25,6 +28,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         activityResultMiddleware.attach(this)
         navMiddleware.attachNavController(navCtrl)
+
+        if (BuildConfig.DEBUG) {
+            stateSerializer.debugMode = true
+        }
+
+        if (savedInstanceState == null)
+            vm.ensureLoggedIn()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
