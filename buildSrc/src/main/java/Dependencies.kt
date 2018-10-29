@@ -7,6 +7,8 @@ object Versions {
     val kotlin_coroutines = "1.0.0"
     val kotlin_serialization = "0.8.3-rc13"
 
+    val objectbox = "2.2.0"
+
     internal val reduxdroid = "8bc98849cd"
     internal val koin = "1.0.1"
     internal val androidx = "1.0.0"
@@ -14,6 +16,7 @@ object Versions {
     internal val bindingCollectionAdapter = "master-SNAPSHOT"
     internal val anko = "0.10.7-rc13"
     internal val facebook = "4.38.0"
+    internal val retrofit = "2.4.0"
 }
 
 object Libs {
@@ -89,6 +92,15 @@ object Libs {
 
     //region Social
     val facebook_login = "com.facebook.android:facebook-login:${Versions.facebook}"
+    //endregion
+
+    //region Networking
+    val retrofit = arrayOf(
+        "com.squareup.retrofit2:retrofit:${Versions.retrofit}",
+        "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    )
+
+    val retrofit_adapter_coroutines = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
     //endregion
 
     //region Testing

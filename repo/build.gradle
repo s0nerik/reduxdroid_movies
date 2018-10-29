@@ -1,5 +1,30 @@
 apply from: "../_module.gradle"
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "io.objectbox:objectbox-gradle-plugin:${Versions.objectbox}"
+    }
+}
+
+// ObjectBox browser dependencies must be set before applying ObjectBox plugin so it does not add objectbox-android
+// (would result in two conflicting versions, e.g. "Duplicate files copied in APK lib/armeabi-v7a/libobjectbox.so").
+dependencies {
+    debugImplementation "io.objectbox:objectbox-android-objectbrowser:$Versions.objectbox"
+    releaseImplementation "io.objectbox:objectbox-android:$Versions.objectbox"
+    implementation "io.objectbox:objectbox-kotlin:$Versions.objectbox"
+}
+
+apply plugin: 'io.objectbox'
+
 dependencies {
     implementation project(":core")
+    implementation Libs.retrofit
+    implementation(Libs.retrofit_adapter_coroutines) {
+        exclude group: "com.squareup.retrofit2", module: "retrofit"
+        exclude group: "org.jetbrains.kotlin", module: "kotlin-stdlib"
+        exclude group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-core"
+    }
 }
