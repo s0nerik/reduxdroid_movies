@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/filmsFragment"
+    >
+    <fragment
+        android:id="@+id/filmsFragment"
+        android:name="com.github.s0nerik.reduxdroid_movies.films.FilmsFragment"
+        android:label="FilmsFragment"
+        tools:layout="@layout/fragment_films"
+        />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.github.s0nerik.reduxdroid_movies.favorites.FavoritesFragment"
+        android:label="FavoritesFragment"
+        tools:layout="@layout/fragment_favorites"
+        />
+</navigation>

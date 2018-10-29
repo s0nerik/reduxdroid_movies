@@ -3,6 +3,9 @@ apply from: "../_module.gradle"
 dependencies {
     implementation project(":core")
     implementation project(":auth")
+    implementation project(":feature_films")
+    implementation project(":feature_favorites")
+
     implementation Libs.facebook_login
     implementation "com.github.florent37:shapeofview:1.4.0"
     implementation "com.github.s0nerik:glide-bindingadapter:1.2.1"

@@ -6,3 +6,5 @@ include ":auth"
 include ":repo"
 
 include ":feature_main"
+include ":feature_films"
+include ":feature_favorites"
