@@ -9,12 +9,13 @@ import com.github.s0nerik.reduxdroid.core.di.reducer
 import com.github.s0nerik.reduxdroid.core.di.state
 import com.github.s0nerik.reduxdroid.navigation.di.navBack
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 
 internal class Module : AppModule({
     val accessToken = AccessToken.getCurrentAccessToken()
-    val isLoggedIn = accessToken != null && !accessToken.isExpired
-    state(AuthState(isLoggedIn = isLoggedIn))
+    val userId = if (accessToken != null && !accessToken.isExpired) accessToken.userId else ""
+    state(AuthState(userId = userId))
 
     single { CallbackManager.Factory.create() as CallbackManager }
     single { LoginManager.getInstance() as LoginManager }
@@ -33,9 +34,13 @@ internal class Module : AppModule({
 
 @Serializable
 data class AuthState internal constructor(
-    val isLoggedIn: Boolean = false,
+    val userId: String = "",
     val isInProgress: Boolean = false
-)
+) {
+    @Transient
+    val isLoggedIn: Boolean
+        get() = userId.isNotBlank()
+}
 
 // Actions
 
@@ -53,10 +58,10 @@ internal fun fbLoginStart(a: FbLogin.Start, s: AuthState) = s.copy(
 
 internal fun fbLoginSuccess(a: FbLogin.Success, s: AuthState) = s.copy(
     isInProgress = false,
-    isLoggedIn = true
+    userId = a.loginResult.accessToken.userId
 )
 
 internal fun fbLoginError(a: FbLogin.Error, s: AuthState) = s.copy(
     isInProgress = false,
-    isLoggedIn = false
+    userId = ""
 )

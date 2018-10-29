@@ -10,7 +10,11 @@ internal class Module : AppModule({
     state(MainState())
 
     viewModel { MainViewModel(get(), get(), get(), get()) }
-})
+}) {
+    init {
+        initGlideConfigs()
+    }
+}
 
 // State
 

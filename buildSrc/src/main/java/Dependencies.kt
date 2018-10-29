@@ -3,8 +3,8 @@ object Versions {
     val compile_sdk = 28
     val target_sdk = compile_sdk
 
-    val kotlin = "1.3.0-rc-190"
-    val kotlin_coroutines = "1.0.0-RC1"
+    val kotlin = "1.3.0"
+    val kotlin_coroutines = "1.0.0"
     val kotlin_serialization = "0.8.3-rc13"
 
     internal val reduxdroid = "8bc98849cd"
@@ -13,6 +13,7 @@ object Versions {
     internal val androidx_nav = "1.0.0-alpha06"
     internal val bindingCollectionAdapter = "master-SNAPSHOT"
     internal val anko = "0.10.7-rc13"
+    internal val facebook = "4.38.0"
 }
 
 object Libs {
@@ -73,7 +74,8 @@ object Libs {
 
     val bindingCollectionAdapter = arrayOf(
             "com.github.evant.binding-collection-adapter:bindingcollectionadapter:${Versions.bindingCollectionAdapter}",
-            "com.github.evant.binding-collection-adapter:bindingcollectionadapter-recyclerview:${Versions.bindingCollectionAdapter}"
+            "com.github.evant.binding-collection-adapter:bindingcollectionadapter-recyclerview:${Versions.bindingCollectionAdapter}",
+            "com.github.evant.binding-collection-adapter:bindingcollectionadapter-ktx:${Versions.bindingCollectionAdapter}"
     )
 
     val androidx = arrayOf(
@@ -83,6 +85,10 @@ object Libs {
             androidx_nav_runtime, androidx_nav_ui_ktx, androidx_nav_fragment_ktx,
             *bindingCollectionAdapter
     )
+    //endregion
+
+    //region Social
+    val facebook_login = "com.facebook.android:facebook-login:${Versions.facebook}"
     //endregion
 
     //region Testing

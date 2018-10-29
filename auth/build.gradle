@@ -2,5 +2,5 @@ apply from: "../_module.gradle"
 
 dependencies {
     implementation project(":core")
-    implementation "com.facebook.android:facebook-login:4.38.0"
+    implementation Libs.facebook_login
 }
