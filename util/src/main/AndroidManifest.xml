@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.github.s0nerik.reduxdroid_movies.util">
+    <application>
+        <provider
+            android:authorities="${applicationId}.util-module"
+            android:name=".Module"
+            />
+    </application>
+</manifest>
