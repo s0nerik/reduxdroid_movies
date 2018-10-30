@@ -1,11 +1,14 @@
 package com.github.s0nerik.reduxdroid_movies.model
 
 import kotlinx.serialization.Serializable
+import org.joda.time.DateTime
 
 @Serializable
 data class Movie(
-        val name: String,
-        val year: Int,
-        val coverUrl: String,
-        val isFavorite: Boolean
+    val id: Int,
+    val name: String,
+    val releaseDate: DateTime,
+    val coverUrl: String,
+    val isFavorite: Boolean,
+    val rating: Float
 )

@@ -1,5 +1,6 @@
 apply from: "../_module.gradle"
 
 dependencies {
+    implementation project(":util")
     implementation Libs.module_basic
 }

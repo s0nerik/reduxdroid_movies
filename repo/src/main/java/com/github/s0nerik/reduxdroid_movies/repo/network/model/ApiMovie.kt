@@ -1,6 +1,8 @@
 package com.github.s0nerik.reduxdroid_movies.repo.network.model
 
-import java.util.*
+import com.github.s0nerik.reduxdroid_movies.model.Movie
+import com.github.s0nerik.reduxdroid_movies.repo.network.util.parseMovieDbDate
+import org.joda.time.DateTime
 
 internal data class ApiMovie(
     val id: Int,
@@ -9,5 +11,14 @@ internal data class ApiMovie(
     val title: String?,
     val posterPath: String?,
     val overview: String?,
-    val releaseDate: Date?
-)
+    val releaseDate: String?
+) {
+    fun toLocal() = Movie(
+        id = id,
+        name = title ?: "",
+        releaseDate = releaseDate?.let { parseMovieDbDate(it) } ?: DateTime(0),
+        coverUrl = "https://image.tmdb.org/t/p/w500${posterPath}",
+        isFavorite = false,
+        rating = voteAverage
+    )
+}

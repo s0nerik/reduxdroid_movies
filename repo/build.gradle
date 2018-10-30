@@ -21,6 +21,7 @@ apply plugin: 'io.objectbox'
 
 dependencies {
     implementation project(":core")
+    implementation Libs.okHttp
     implementation Libs.retrofit
     implementation(Libs.retrofit_adapter_coroutines) {
         exclude group: "com.squareup.retrofit2", module: "retrofit"

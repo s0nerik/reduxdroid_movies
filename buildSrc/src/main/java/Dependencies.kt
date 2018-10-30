@@ -95,12 +95,22 @@ object Libs {
     //endregion
 
     //region Networking
+    val okHttp = arrayOf(
+        "com.squareup.okhttp3:okhttp:3.10.0",
+        "com.github.simonpercic:oklog3:2.3.0",
+        "com.squareup.okhttp3:logging-interceptor:3.10.0"
+    )
+
     val retrofit = arrayOf(
         "com.squareup.retrofit2:retrofit:${Versions.retrofit}",
         "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
     )
 
     val retrofit_adapter_coroutines = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
+    //endregion
+
+    //region Working with dates
+    val kodatime = "com.github.debop:koda-time:1.2.2"
     //endregion
 
     //region Testing

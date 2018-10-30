@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 internal interface MovieDbService {
-    @GET("/discover/movie")
+    @GET("discover/movie")
     fun getMoviesForPeriod(
         @Query("primary_release_date.gte") from: String,
         @Query("primary_release_date.lte") to: String,

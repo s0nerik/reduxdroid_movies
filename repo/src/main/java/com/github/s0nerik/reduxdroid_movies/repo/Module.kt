@@ -4,6 +4,7 @@ import com.github.s0nerik.reduxdroid.core.di.AppModule
 import com.github.s0nerik.reduxdroid_movies.repo.local.LocalRepository
 import com.github.s0nerik.reduxdroid_movies.repo.network.MovieDbService
 import com.github.s0nerik.reduxdroid_movies.repo.network.NetworkRepository
+import com.github.simonpercic.oklog3.OkLogInterceptor
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -23,7 +24,14 @@ internal class Module : AppModule({
     }
 
     single(name = "MovieDb") {
-        OkHttpClient.Builder().build()
+        OkHttpClient.Builder()
+            .addInterceptor(
+                OkLogInterceptor.builder()
+                    .withRequestHeaders(true)
+                    .withResponseHeaders(true)
+                    .build()
+            )
+            .build()
     }
 
     single {
@@ -31,7 +39,7 @@ internal class Module : AppModule({
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create(get(name = "MovieDb")))
             .client(get(name = "MovieDb"))
-            .baseUrl("https://api.themoviedb.org/3")
+            .baseUrl("https://api.themoviedb.org/3/")
             .build()
             .create(MovieDbService::class.java)
     }

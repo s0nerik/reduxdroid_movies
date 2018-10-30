@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string translatable="false" name="rv_layout_manager_linear">androidx.recyclerview.widget.LinearLayoutManager</string>
+    <string translatable="false" name="rv_layout_manager_grid">androidx.recyclerview.widget.GridLayoutManager</string>
+</resources>

@@ -2,5 +2,6 @@ apply from: "../_module.gradle"
 
 dependencies {
     api Libs.module_ui
+    api project(":util")
     api project(":model")
 }

@@ -14,10 +14,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-        <View
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#47f4bd"
+            android:orientation="vertical"
+            app:layoutManager="@string/rv_layout_manager_linear"
+            app:items='@{vm.items}'
+            app:diffConfig='@{vm.diff}'
+            app:itemBinding='@{vm.itemBinding}'
+            />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility='@{vm.isLoading}'
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

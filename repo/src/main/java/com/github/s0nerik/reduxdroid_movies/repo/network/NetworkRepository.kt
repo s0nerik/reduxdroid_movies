@@ -5,12 +5,13 @@ import com.github.s0nerik.reduxdroid_movies.repo.network.model.ApiMoviesPage
 import com.github.s0nerik.reduxdroid_movies.repo.network.util.formatMovieDbDate
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import org.joda.time.DateTime
 import java.util.*
 
 internal class NetworkRepository(
     private val api: MovieDbService
 ) {
-    suspend fun getMovies(from: Date, to: Date): List<Movie> = coroutineScope {
+    suspend fun getMovies(from: DateTime, to: DateTime): List<Movie> = coroutineScope {
         val startDate = formatMovieDbDate(from)
         val endDate = formatMovieDbDate(to)
 
@@ -28,6 +29,8 @@ internal class NetworkRepository(
             moviePages += pages
         }
 
-        emptyList<Movie>()
+        val movies = moviePages.flatMap { it.results }.map { it.toLocal() }
+
+        return@coroutineScope movies
     }
 }

@@ -1,0 +1,31 @@
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <variable
+            name="item"
+            type="com.github.s0nerik.reduxdroid_movies.films.FilmsItem"
+            />
+        <variable
+            name="listener"
+            type="com.github.s0nerik.reduxdroid_movies.films.FilmsItem.Listener"
+            />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="16dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text='@{item.movie.name}'
+            android:textColor="#000"
+            tools:text="Venom"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
