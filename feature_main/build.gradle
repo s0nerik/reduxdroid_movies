@@ -8,5 +8,4 @@ dependencies {
 
     implementation Libs.facebook_login
     implementation "com.github.florent37:shapeofview:1.4.0"
-    implementation "com.github.s0nerik:glide-bindingadapter:1.2.1"
 }

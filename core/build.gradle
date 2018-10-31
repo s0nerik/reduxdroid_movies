@@ -4,4 +4,5 @@ dependencies {
     api Libs.module_ui
     api project(":util")
     api project(":model")
+    api "com.github.s0nerik:glide-bindingadapter:1.2.1"
 }
