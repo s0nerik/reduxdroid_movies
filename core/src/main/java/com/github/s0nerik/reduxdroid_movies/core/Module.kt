@@ -14,4 +14,8 @@ internal class Module : AppModule({
                 bg = Dispatchers.Default
         ) as CoroutineContextHolder
     }
-})
+}) {
+    init {
+        initGlideConfigs()
+    }
+}

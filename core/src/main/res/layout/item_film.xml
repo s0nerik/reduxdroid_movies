@@ -5,6 +5,7 @@
     >
 
     <data>
+        <import type="com.github.s0nerik.reduxdroid_movies.core.util.GlideConfig" />
 
         <variable
             name="item"
@@ -23,7 +24,7 @@
         android:layout_height="wrap_content"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         >
 
         <androidx.constraintlayout.widget.Guideline
@@ -68,15 +69,19 @@
             android:id="@+id/poster"
             android:layout_width="88dp"
             android:layout_height="128dp"
+            android:layout_marginTop="4dp"
             android:layout_marginStart="16dp"
-            app:cardElevation="0dp"
+            app:cardElevation="4dp"
             app:cardCornerRadius="8dp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             >
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@color/md_amber_700"
+                app:glideConfig='@{GlideConfig.MOVIE_POSTER}'
+                app:glideImageSrc='@{item.movie.coverUrl}'
+                tools:src="@color/md_grey_300"
                 />
         </com.google.android.material.card.MaterialCardView>
 
