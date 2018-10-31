@@ -1,3 +1,5 @@
+import Versions.bindingCollectionAdapter
+
 object Versions {
     val min_sdk = 21
     val compile_sdk = 28
@@ -5,15 +7,16 @@ object Versions {
 
     val kotlin = "1.3.0"
     val kotlin_coroutines = "1.0.0"
-    val kotlin_serialization = "0.8.3-rc13"
+    val kotlin_serialization = "0.9.0"
 
     val objectbox = "2.2.0"
 
-    internal val reduxdroid = "8bc98849cd"
+    internal val reduxdroid = "41a123eceb"
     internal val koin = "1.0.1"
     internal val androidx = "1.0.0"
     internal val androidx_nav = "1.0.0-alpha06"
-    internal val bindingCollectionAdapter = "master-SNAPSHOT"
+    internal val androidx_lifecycle = "2.0.0"
+    internal val bindingCollectionAdapter = "a19e5af669"
     internal val anko = "0.10.7-rc13"
     internal val facebook = "4.38.0"
     internal val retrofit = "2.4.0"
@@ -66,6 +69,7 @@ object Libs {
 
     val androidx_material = "com.google.android.material:material:${Versions.androidx}"
     val androidx_appcompat = "androidx.appcompat:appcompat:${Versions.androidx}"
+    val androidx_cardview = "androidx.cardview:cardview:${Versions.androidx}"
     val androidx_recyclerview = "androidx.recyclerview:recyclerview:${Versions.androidx}"
     val androidx_constraintlayout = "androidx.constraintlayout:constraintlayout:1.1.3"
 
@@ -73,20 +77,25 @@ object Libs {
     val androidx_nav_ui_ktx = "android.arch.navigation:navigation-ui-ktx:${Versions.androidx_nav}"
     val androidx_nav_fragment_ktx = "android.arch.navigation:navigation-fragment-ktx:${Versions.androidx_nav}"
 
-    val livedata_ktx = "com.shopify:livedata-ktx:2.0.1"
-
-    val bindingCollectionAdapter = arrayOf(
-            "com.github.evant.binding-collection-adapter:bindingcollectionadapter:${Versions.bindingCollectionAdapter}",
-            "com.github.evant.binding-collection-adapter:bindingcollectionadapter-recyclerview:${Versions.bindingCollectionAdapter}",
-            "com.github.evant.binding-collection-adapter:bindingcollectionadapter-ktx:${Versions.bindingCollectionAdapter}"
+    val androidx_lifecycle = arrayOf(
+            "androidx.lifecycle:lifecycle-viewmodel:${Versions.androidx_lifecycle}",
+            "androidx.lifecycle:lifecycle-livedata:${Versions.androidx_lifecycle}"
     )
 
     val androidx = arrayOf(
             androidx_core, androidx_core_ktx,
-            androidx_material, androidx_appcompat, androidx_recyclerview, androidx_constraintlayout,
-            livedata_ktx,
+            androidx_appcompat, androidx_recyclerview, androidx_constraintlayout,
+            androidx_material, androidx_cardview,
             androidx_nav_runtime, androidx_nav_ui_ktx, androidx_nav_fragment_ktx,
-            *bindingCollectionAdapter
+            *androidx_lifecycle
+    )
+    //endregion
+
+    //region Various UI components
+    val bindingCollectionAdapter = arrayOf(
+            "com.github.s0nerik.binding-collection-adapter:bindingcollectionadapter:${Versions.bindingCollectionAdapter}",
+            "com.github.s0nerik.binding-collection-adapter:bindingcollectionadapter-recyclerview:${Versions.bindingCollectionAdapter}",
+            "com.github.s0nerik.binding-collection-adapter:bindingcollectionadapter-ktx:${Versions.bindingCollectionAdapter}"
     )
     //endregion
 

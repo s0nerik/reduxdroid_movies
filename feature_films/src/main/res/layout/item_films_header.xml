@@ -13,13 +13,19 @@
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
         >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text='@{item.title}'
-            android:gravity="center"
-            tools:text="Feb"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/md_grey_900"
+            tools:text="February, 2018"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

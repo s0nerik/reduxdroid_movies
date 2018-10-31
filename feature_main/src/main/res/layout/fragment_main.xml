@@ -17,19 +17,36 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?colorPrimary"
+            android:layout_height="56dp"
+            android:background="@color/md_white_1000"
+            android:elevation="4dp"
             >
-            <com.github.florent37.shapeofview.shapes.CircleView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 >
-                <com.facebook.login.widget.ProfilePictureView
-                    android:id="@+id/avatarView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <com.github.florent37.shapeofview.shapes.CircleView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="center_vertical"
+                    >
+                    <com.facebook.login.widget.ProfilePictureView
+                        android:id="@+id/avatarView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        />
+                </com.github.florent37.shapeofview.shapes.CircleView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/toolbar_title"
+                    android:textColor="@color/md_black_1000"
+                    android:textSize="22sp"
+                    android:fontFamily="@font/pacifico"
+                    android:layout_gravity="center"
                     />
-            </com.github.florent37.shapeofview.shapes.CircleView>
+            </FrameLayout>
         </androidx.appcompat.widget.Toolbar>
 
         <fragment
@@ -48,7 +65,8 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNav"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
+            android:background="#fff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/menu_main"
             />

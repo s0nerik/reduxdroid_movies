@@ -3,29 +3,145 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
+
     <data>
+
         <variable
             name="item"
             type="com.github.s0nerik.reduxdroid_movies.films.FilmsItem"
             />
+
         <variable
             name="listener"
             type="com.github.s0nerik.reduxdroid_movies.films.FilmsItem.Listener"
             />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:padding="16dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginBottom="8dp"
         >
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideEnd"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="8dp"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideBottom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="8dp"
+            />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/buttonsBarrier"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="poster,description"
+            />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardBackgroundColor="@color/md_white_1000"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/md_blue_grey_50"
+            app:strokeWidth="2dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/poster"
+            android:layout_width="88dp"
+            android:layout_height="128dp"
+            android:layout_marginStart="16dp"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@color/md_amber_700"
+                />
+        </com.google.android.material.card.MaterialCardView>
+
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp"
             android:gravity="center_vertical"
             android:text='@{item.movie.name}'
+            android:textSize="18sp"
             android:textColor="#000"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="@+id/poster"
+            app:layout_constraintStart_toEndOf="@id/poster"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:text="Venom"
+            />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text='@{item.movie.description}'
+            android:textSize="14sp"
+            android:textColor="@color/md_grey_800"
+            android:ellipsize="end"
+            android:maxLines="4"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintEnd_toEndOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            tools:text="When Eddie Brock acq, he will have to release his alter-ego 'Venom' to save his life."
+            />
+
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:id="@+id/btnShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Share"
+            android:drawableStart="@drawable/share"
+            android:drawablePadding="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/guideEnd"
+            app:layout_constraintTop_toBottomOf="@+id/buttonsBarrier"
+            app:layout_constraintBottom_toTopOf="@+id/guideBottom"
+            />
+
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:id="@+id/btnAddFav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add to favorites"
+            android:layout_marginEnd="16dp"
+            android:drawableStart="@drawable/star"
+            android:drawablePadding="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/btnShare"
+            app:layout_constraintTop_toTopOf="@+id/btnShare"
+            app:layout_constraintBottom_toBottomOf="@+id/btnShare"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

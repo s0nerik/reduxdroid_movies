@@ -41,13 +41,13 @@ class FilmsViewModel internal constructor(
 
     fun groupedByMonth(items: List<Movie>): List<Any> {
         val mappings = items.sortedByDescending { it.releaseDate }
-            .groupBy { it.releaseDate.monthOfYear().asShortText }
+            .groupBy { it.releaseDate.monthOfYear() }
             .mapValues { it.value.sortedByDescending { it.rating } }
 
         val groupedItems = mutableListOf<Any>()
-        mappings.keys.forEach { date ->
-            groupedItems += FilmsHeaderItem(date)
-            mappings[date]!!.forEach {
+        mappings.keys.forEach { month ->
+            groupedItems += FilmsHeaderItem("${month.asText}, ${month.dateTime.year}")
+            mappings[month]!!.forEach {
                 groupedItems += FilmsItem(it)
             }
         }

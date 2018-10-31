@@ -7,6 +7,7 @@ import org.joda.time.DateTime
 data class Movie(
     val id: Int,
     val name: String,
+    val description: String,
     val releaseDate: DateTime,
     val coverUrl: String,
     val isFavorite: Boolean,

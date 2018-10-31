@@ -2,4 +2,5 @@
 <resources>
     <string name="menu_favorites">Favorites</string>
     <string name="menu_films">Films</string>
+    <string name="toolbar_title">Movies</string>
 </resources>

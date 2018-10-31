@@ -16,6 +16,7 @@ internal data class ApiMovie(
     fun toLocal() = Movie(
         id = id,
         name = title ?: "",
+        description = overview ?: "",
         releaseDate = releaseDate?.let { parseMovieDbDate(it) } ?: DateTime(0),
         coverUrl = "https://image.tmdb.org/t/p/w500${posterPath}",
         isFavorite = false,
