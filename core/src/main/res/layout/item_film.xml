@@ -8,12 +8,12 @@
 
         <variable
             name="item"
-            type="com.github.s0nerik.reduxdroid_movies.films.FilmsItem"
+            type="com.github.s0nerik.reduxdroid_movies.core.ui.FilmItem"
             />
 
         <variable
             name="listener"
-            type="com.github.s0nerik.reduxdroid_movies.films.FilmsItem.Listener"
+            type="com.github.s0nerik.reduxdroid_movies.core.ui.FilmItem.Listener"
             />
     </data>
 
