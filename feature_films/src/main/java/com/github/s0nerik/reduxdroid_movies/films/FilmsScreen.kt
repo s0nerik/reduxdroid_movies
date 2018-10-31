@@ -42,7 +42,8 @@ class FilmsViewModel internal constructor(
     }
 
     fun loadItems() {
-        dispatch(loadFilms(repo))
+        if (currentState.get(FilmsState::items).isEmpty())
+            dispatch(loadFilms(repo))
     }
 
     fun groupedByMonth(items: List<Movie>): List<Any> {
