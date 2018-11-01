@@ -67,8 +67,8 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/poster"
-            android:layout_width="88dp"
-            android:layout_height="128dp"
+            android:layout_width="92dp"
+            android:layout_height="136dp"
             android:layout_marginTop="4dp"
             android:layout_marginStart="16dp"
             app:cardElevation="4dp"
@@ -93,7 +93,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="12dp"
             android:paddingTop="12dp"
-            android:paddingBottom="8dp"
+            android:paddingBottom="4dp"
             android:gravity="center_vertical"
             android:text='@{item.movie.name}'
             android:textSize="18sp"
@@ -105,10 +105,24 @@
             tools:text="Venom"
             />
 
+        <RatingBar
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rating='@{item.movie.rating}'
+            android:stepSize="0.1"
+            android:numStars="10"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintStart_toEndOf="@id/poster"
+            />
+
         <TextView
             android:id="@+id/description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:gravity="center_vertical"
             android:text='@{item.movie.description}'
             android:textSize="14sp"
@@ -117,8 +131,8 @@
             android:maxLines="4"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintEnd_toEndOf="@+id/title"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            tools:text="When Eddie Brock acq, he will have to release his alter-ego 'Venom' to save his life."
+            app:layout_constraintTop_toBottomOf="@+id/rating"
+            tools:text="When Eddie Brock acq, he will have to release his alter-ego 'Venom' to save his life. Hello there."
             />
 
         <Button
