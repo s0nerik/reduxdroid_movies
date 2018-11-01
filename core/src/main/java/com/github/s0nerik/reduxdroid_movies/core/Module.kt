@@ -1,6 +1,8 @@
 package com.github.s0nerik.reduxdroid_movies.core
 
 import com.github.s0nerik.reduxdroid.core.di.AppModule
+import com.github.s0nerik.reduxdroid.state_serializer.di.stateSerializer
+import com.github.s0nerik.reduxdroid_movies.core.serializers.DateTimeSerializer
 import com.github.s0nerik.reduxdroid_movies.core.util.*
 import kotlinx.coroutines.Dispatchers
 
@@ -14,6 +16,8 @@ internal class Module : AppModule({
                 bg = Dispatchers.Default
         ) as CoroutineContextHolder
     }
+
+    stateSerializer(DateTimeSerializer)
 }) {
     init {
         initGlideConfigs()
