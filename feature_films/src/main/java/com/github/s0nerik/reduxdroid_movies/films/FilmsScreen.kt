@@ -29,6 +29,7 @@ class FilmsViewModel internal constructor(
 ) : BaseViewModel(store, res, dispatcher, ctx), FilmItem.Listener {
     val items = state.get(FilmsState::items).map(this::groupedByMonth)
     val isLoading = state.get(FilmsState::isLoading)
+    val loadingError = state.get(FilmsState::loadingError, "")
 
     val diff = genericDiffCallback<FilmItem> { old, new -> old.movie.id == new.movie.id }
 
