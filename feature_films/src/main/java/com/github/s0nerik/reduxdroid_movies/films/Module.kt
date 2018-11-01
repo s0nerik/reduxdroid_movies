@@ -3,8 +3,10 @@ package com.github.s0nerik.reduxdroid_movies.films
 import com.github.s0nerik.reduxdroid.core.di.AppModule
 import com.github.s0nerik.reduxdroid.core.di.reducer
 import com.github.s0nerik.reduxdroid.core.di.state
+import com.github.s0nerik.reduxdroid_movies.core.util.ListDataState
 import com.github.s0nerik.reduxdroid_movies.model.Movie
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 
 internal class Module : AppModule({
@@ -22,15 +24,26 @@ internal class Module : AppModule({
 
 @Serializable
 data class FilmsState internal constructor(
-        val items: List<Movie> = emptyList(),
-        val isLoading: Boolean = false,
-        val loadingError: String? = null
-)
+        internal val dataState: ListDataState<Movie> = ListDataState.create()
+) {
+    @Transient
+    val items: List<Movie>
+        get() = dataState.items
+
+    @Transient
+    val isLoading: Boolean
+        get() = dataState.isLoading
+
+    @Transient
+    val loadingError: String?
+        get() = dataState.loadingError
+}
 
 // Actions
 
 internal sealed class Loading {
     object Start : Loading()
+
     @Serializable
     data class Success(val data: List<Movie>) : Loading()
 
@@ -44,20 +57,17 @@ internal data class UpdateMoviesList(val data: List<Movie>)
 // Reducers
 
 internal fun loadingStart(a: Loading.Start, s: FilmsState) = s.copy(
-        isLoading = true
+        dataState = s.dataState.loading()
 )
 
 internal fun loadingSuccess(a: Loading.Success, s: FilmsState) = s.copy(
-        isLoading = false,
-        loadingError = null,
-        items = a.data
+        dataState = s.dataState.successLoading(a.data)
 )
 
 internal fun loadingError(a: Loading.Error, s: FilmsState) = s.copy(
-        isLoading = false,
-        loadingError = a.error.localizedMessage
+        dataState = s.dataState.errorLoading(a.error)
 )
 
 internal fun updateMoviesList(a: UpdateMoviesList, s: FilmsState) = s.copy(
-        items = a.data
+        dataState = s.dataState.setItems(a.data)
 )
