@@ -7,7 +7,6 @@ import com.facebook.login.LoginResult
 import com.github.s0nerik.reduxdroid.core.di.AppModule
 import com.github.s0nerik.reduxdroid.core.di.reducer
 import com.github.s0nerik.reduxdroid.core.di.state
-import com.github.s0nerik.reduxdroid.navigation.di.navBack
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import org.koin.androidx.viewmodel.ext.koin.viewModel
@@ -24,8 +23,7 @@ internal class Module : AppModule({
     reducer(::fbLoginStart)
     reducer(::fbLoginSuccess)
     reducer(::fbLoginError)
-
-    navBack<FbLogin.Success>(dropOriginalAction = false)
+    reducer(::fbLogOut)
 
     viewModel { AuthViewModel(get(), get(), get(), get()) }
 })
@@ -34,8 +32,8 @@ internal class Module : AppModule({
 
 @Serializable
 data class AuthState internal constructor(
-    val userId: String = "",
-    val isInProgress: Boolean = false
+        val userId: String = "",
+        val isInProgress: Boolean = false
 ) {
     @Transient
     val isLoggedIn: Boolean
@@ -44,24 +42,30 @@ data class AuthState internal constructor(
 
 // Actions
 
-sealed class FbLogin {
-    object Start : FbLogin()
-    data class Success internal constructor(val loginResult: LoginResult) : FbLogin()
-    data class Error internal constructor(val error: Throwable) : FbLogin()
+sealed class FbAction {
+    sealed class Login : FbAction() {
+        object Start : Login()
+        data class Success internal constructor(val loginResult: LoginResult) : Login()
+        data class Error internal constructor(val error: Throwable) : Login()
+    }
+
+    object LogOut : FbAction()
 }
 
 // Reducers
 
-internal fun fbLoginStart(a: FbLogin.Start, s: AuthState) = s.copy(
-    isInProgress = true
+internal fun fbLoginStart(a: FbAction.Login.Start, s: AuthState) = s.copy(
+        isInProgress = true
 )
 
-internal fun fbLoginSuccess(a: FbLogin.Success, s: AuthState) = s.copy(
-    isInProgress = false,
-    userId = a.loginResult.accessToken.userId
+internal fun fbLoginSuccess(a: FbAction.Login.Success, s: AuthState) = s.copy(
+        isInProgress = false,
+        userId = a.loginResult.accessToken.userId
 )
 
-internal fun fbLoginError(a: FbLogin.Error, s: AuthState) = s.copy(
-    isInProgress = false,
-    userId = ""
+internal fun fbLoginError(a: FbAction.Login.Error, s: AuthState) = s.copy(
+        isInProgress = false,
+        userId = ""
 )
+
+internal fun fbLogOut(a: FbAction.LogOut, s: AuthState) = AuthState()

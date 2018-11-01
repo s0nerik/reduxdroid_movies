@@ -19,7 +19,7 @@ class AuthViewModel internal constructor(
         ctx: CoroutineContextHolder
 ) : BaseViewModel(store, res, dispatcher, ctx) {
     fun login() {
-        dispatch(FbLogin.Start)
+        dispatch(FbAction.Login.Start)
     }
 }
 

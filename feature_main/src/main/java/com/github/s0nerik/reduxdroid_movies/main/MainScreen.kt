@@ -6,7 +6,7 @@ import androidx.navigation.ui.NavigationUI
 import com.github.s0nerik.reduxdroid.core.ActionDispatcher
 import com.github.s0nerik.reduxdroid.core.StateStore
 import com.github.s0nerik.reduxdroid_movies.auth.AuthState
-import com.github.s0nerik.reduxdroid_movies.core.base.BaseBoundVmFragment
+import com.github.s0nerik.reduxdroid_movies.auth.FbAction
 import com.github.s0nerik.reduxdroid_movies.core.base.BaseBoundVmNavigationFragment
 import com.github.s0nerik.reduxdroid_movies.core.base.BaseViewModel
 import com.github.s0nerik.reduxdroid_movies.core.util.CoroutineContextHolder
@@ -16,21 +16,21 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import org.koin.android.ext.android.inject
 
 class MainViewModel internal constructor(
-    store: StateStore,
-    dispatcher: ActionDispatcher,
-    res: ResourceResolver,
-    ctx: CoroutineContextHolder
+        store: StateStore,
+        dispatcher: ActionDispatcher,
+        res: ResourceResolver,
+        ctx: CoroutineContextHolder
 ) : BaseViewModel(store, res, dispatcher, ctx) {
     fun logOut() {
-        TODO()
+        dispatch(FbAction.LogOut)
     }
 }
 
 class MainFragment : BaseBoundVmNavigationFragment<FragmentMainBinding, MainViewModel>(
-    layoutId = R.layout.fragment_main,
-    vmClass = MainViewModel::class,
-    vmSetter = { it::setVm },
-    navHostFragmentId = R.id.navHostFragment
+        layoutId = R.layout.fragment_main,
+        vmClass = MainViewModel::class,
+        vmSetter = { it::setVm },
+        navHostFragmentId = R.id.navHostFragment
 ) {
     val store: StateStore by inject()
 

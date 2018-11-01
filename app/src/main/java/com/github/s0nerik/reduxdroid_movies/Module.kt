@@ -7,6 +7,7 @@ import com.github.s0nerik.reduxdroid.core.di.middlewares
 import com.github.s0nerik.reduxdroid.navigation.di.navForward
 import com.github.s0nerik.reduxdroid.navigation.middleware.NavigationMiddleware
 import com.github.s0nerik.reduxdroid_movies.auth.FacebookAuthMiddleware
+import com.github.s0nerik.reduxdroid_movies.auth.FbAction
 import me.tatarka.redux.Reducer
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 
@@ -15,14 +16,16 @@ internal class Module : AppModule({
 
     middlewares {
         listOf(
-            LoggingMiddleware(),
-            get<ActivityResultMiddleware>(),
-            get<NavigationMiddleware>(),
-            get<FacebookAuthMiddleware>()
+                LoggingMiddleware(),
+                get<ActivityResultMiddleware>(),
+                get<NavigationMiddleware>(),
+                get<FacebookAuthMiddleware>()
         )
     }
 
+    navForward<FbAction.LogOut>(R.id.action_mainFragment_to_authFragment)
     navForward<Nav.Login>(R.id.action_mainFragment_to_authFragment)
+    navForward<FbAction.Login.Success>(R.id.action_authFragment_to_mainFragment)
 
     viewModel { AppViewModel(get(), get(), get(), get()) }
 })

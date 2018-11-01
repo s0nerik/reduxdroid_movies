@@ -11,7 +11,7 @@ object Versions {
 
     val objectbox = "2.2.0"
 
-    internal val reduxdroid = "41a123eceb"
+    internal val reduxdroid = "731a1f46b0"
     internal val koin = "1.0.1"
     internal val androidx = "1.0.0"
     internal val androidx_nav = "1.0.0-alpha06"

@@ -13,7 +13,7 @@ import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import java.util.concurrent.CancellationException
 
-abstract class FacebookAuthMiddleware : TypedMiddleware<FbLogin.Start>(FbLogin.Start::class)
+abstract class FacebookAuthMiddleware : TypedMiddleware<FbAction>(FbAction::class)
 
 internal class FacebookAuthMiddlewareImpl(
     private val loginManager: LoginManager,
@@ -26,21 +26,28 @@ internal class FacebookAuthMiddlewareImpl(
     init {
         loginManager.registerCallback(callbackManager, object: FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult) {
-                dispatcher.dispatch(FbLogin.Success(result))
+                dispatcher.dispatch(FbAction.Login.Success(result))
             }
 
             override fun onCancel() {
-                dispatcher.dispatch(FbLogin.Error(CancellationException()))
+                dispatcher.dispatch(FbAction.Login.Error(CancellationException()))
             }
 
             override fun onError(error: FacebookException) {
-                dispatcher.dispatch(FbLogin.Error(error))
+                dispatcher.dispatch(FbAction.Login.Error(error))
             }
         })
     }
 
-    override fun run(next: (Any) -> Any, action: FbLogin.Start): Any {
-        fragment?.let { loginManager.logInWithReadPermissions(fragment, listOf("email")) }
+    override fun run(next: (Any) -> Any, action: FbAction): Any {
+        when (action) {
+            is FbAction.Login.Start -> {
+                fragment?.let { loginManager.logInWithReadPermissions(fragment, listOf("email")) }
+            }
+            is FbAction.LogOut -> {
+                loginManager.logOut()
+            }
+        }
         return next(action)
     }
 }
