@@ -47,7 +47,9 @@ class AppActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
-        stateSerializer.restore()
+
+        if (!isChangingConfigurations)
+            stateSerializer.restore()
     }
 
     override fun onDestroy() {
