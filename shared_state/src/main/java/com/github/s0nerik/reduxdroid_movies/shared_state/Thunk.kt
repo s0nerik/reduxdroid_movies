@@ -1,4 +1,4 @@
-package com.github.s0nerik.reduxdroid_movies.films
+package com.github.s0nerik.reduxdroid_movies.shared_state
 
 import com.github.s0nerik.reduxdroid.core.Thunk
 import com.github.s0nerik.reduxdroid_movies.model.Movie
@@ -6,7 +6,7 @@ import com.github.s0nerik.reduxdroid_movies.repo.MovieDbRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-internal fun CoroutineScope.loadFilms(repo: MovieDbRepository): Thunk = { dispatch ->
+fun CoroutineScope.loadFilms(repo: MovieDbRepository): Thunk = { dispatch ->
     launch {
         try {
             dispatch(Loading.Start)
@@ -18,7 +18,7 @@ internal fun CoroutineScope.loadFilms(repo: MovieDbRepository): Thunk = { dispat
     }
 }
 
-internal fun CoroutineScope.toggleFavorite(repo: MovieDbRepository, movie: Movie): Thunk = { dispatch ->
+fun CoroutineScope.toggleFavorite(repo: MovieDbRepository, movie: Movie): Thunk = { dispatch ->
     launch {
         repo.toggleFavorite(movie)
         val movies = repo.getMovies()

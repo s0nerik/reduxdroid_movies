@@ -5,6 +5,7 @@ include ":core"
 include ":model"
 include ":auth"
 include ":repo"
+include ":shared_state"
 
 include ":feature_main"
 include ":feature_films"

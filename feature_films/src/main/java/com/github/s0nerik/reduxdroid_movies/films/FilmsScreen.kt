@@ -9,13 +9,13 @@ import com.github.s0nerik.reduxdroid.livedata.get
 import com.github.s0nerik.reduxdroid_movies.core.base.BaseBoundVmFragment
 import com.github.s0nerik.reduxdroid_movies.core.base.BaseViewModel
 import com.github.s0nerik.reduxdroid_movies.core.ui.FilmItem
-import com.github.s0nerik.reduxdroid_movies.core.util.CoroutineContextHolder
-import com.github.s0nerik.reduxdroid_movies.core.util.ResourceResolver
-import com.github.s0nerik.reduxdroid_movies.core.util.genericDiffCallback
-import com.github.s0nerik.reduxdroid_movies.core.util.map
+import com.github.s0nerik.reduxdroid_movies.core.util.*
 import com.github.s0nerik.reduxdroid_movies.films.databinding.FragmentFilmsBinding
 import com.github.s0nerik.reduxdroid_movies.model.Movie
 import com.github.s0nerik.reduxdroid_movies.repo.MovieDbRepository
+import com.github.s0nerik.reduxdroid_movies.shared_state.SharedState
+import com.github.s0nerik.reduxdroid_movies.shared_state.loadFilms
+import com.github.s0nerik.reduxdroid_movies.shared_state.toggleFavorite
 import kotlinx.android.synthetic.main.fragment_films.*
 import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
 import me.tatarka.bindingcollectionadapter2.map
@@ -27,9 +27,9 @@ class FilmsViewModel internal constructor(
         ctx: CoroutineContextHolder,
         private val repo: MovieDbRepository
 ) : BaseViewModel(store, res, dispatcher, ctx), FilmItem.Listener {
-    val items = state.get(FilmsState::items).map(this::groupedByMonth)
-    val isLoading = state.get(FilmsState::isLoading)
-    val loadingError = state.get(FilmsState::loadingError, "")
+    val items = state.get(SharedState::films).map(this::groupedByMonth)
+    val isLoading = state.get(SharedState::isLoading)
+    val loadingError = state.get(SharedState::loadingError, "")
 
     val diff = genericDiffCallback<FilmItem> { old, new -> old.movie.id == new.movie.id }
 
@@ -42,7 +42,7 @@ class FilmsViewModel internal constructor(
     }
 
     fun loadItems() {
-        if (currentState.get(FilmsState::items).isEmpty())
+        if (currentState.get(SharedState::films).isEmpty())
             dispatch(loadFilms(repo))
     }
 
@@ -76,27 +76,19 @@ class FilmsFragment : BaseBoundVmFragment<FragmentFilmsBinding, FilmsViewModel>(
         vmClass = FilmsViewModel::class,
         vmSetter = { it::setVm }
 ) {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        if (savedInstanceState == null)
-            vm.loadItems()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        savedInstanceState?.getParcelable<Parcelable>(RECYCLER_STATE)?.let {
-            recycler.layoutManager?.onRestoreInstanceState(it)
+        if (savedInstanceState == null) {
+            vm.loadItems()
+        } else {
+            recycler.restoreState(savedInstanceState)
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
-        recycler.layoutManager?.onSaveInstanceState()?.let {
-            outState.putParcelable(RECYCLER_STATE, it)
-        }
+        recycler.saveState(outState)
     }
 
     companion object {

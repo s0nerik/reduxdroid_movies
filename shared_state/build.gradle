@@ -3,5 +3,4 @@ apply from: "../_module.gradle"
 dependencies {
     implementation project(":core")
     implementation project(":repo")
-    implementation project(":shared_state")
 }
