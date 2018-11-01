@@ -1,9 +1,7 @@
 package com.github.s0nerik.reduxdroid_movies.films
 
 import android.os.Bundle
-import android.os.Parcel
 import android.os.Parcelable
-import android.util.SparseArray
 import android.view.View
 import com.github.s0nerik.reduxdroid.core.ActionDispatcher
 import com.github.s0nerik.reduxdroid.core.StateStore
@@ -11,7 +9,10 @@ import com.github.s0nerik.reduxdroid.livedata.get
 import com.github.s0nerik.reduxdroid_movies.core.base.BaseBoundVmFragment
 import com.github.s0nerik.reduxdroid_movies.core.base.BaseViewModel
 import com.github.s0nerik.reduxdroid_movies.core.ui.FilmItem
-import com.github.s0nerik.reduxdroid_movies.core.util.*
+import com.github.s0nerik.reduxdroid_movies.core.util.CoroutineContextHolder
+import com.github.s0nerik.reduxdroid_movies.core.util.ResourceResolver
+import com.github.s0nerik.reduxdroid_movies.core.util.genericDiffCallback
+import com.github.s0nerik.reduxdroid_movies.core.util.map
 import com.github.s0nerik.reduxdroid_movies.films.databinding.FragmentFilmsBinding
 import com.github.s0nerik.reduxdroid_movies.model.Movie
 import com.github.s0nerik.reduxdroid_movies.repo.MovieDbRepository
@@ -20,23 +21,21 @@ import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
 import me.tatarka.bindingcollectionadapter2.map
 
 class FilmsViewModel internal constructor(
-    store: StateStore,
-    dispatcher: ActionDispatcher,
-    res: ResourceResolver,
-    ctx: CoroutineContextHolder,
-    private val repo: MovieDbRepository
+        store: StateStore,
+        dispatcher: ActionDispatcher,
+        res: ResourceResolver,
+        ctx: CoroutineContextHolder,
+        private val repo: MovieDbRepository
 ) : BaseViewModel(store, res, dispatcher, ctx), FilmItem.Listener {
     val items = state.get(FilmsState::items).map(this::groupedByMonth)
     val isLoading = state.get(FilmsState::isLoading)
 
-    val diff = genericDiffCallback<FilmItem>(
-        areItemsTheSame = { old, new -> old.movie.id == new.movie.id }
-    )
+    val diff = genericDiffCallback<FilmItem> { old, new -> old.movie.id == new.movie.id }
 
     val itemBinding = OnItemBindClass<Any>().apply {
         map<FilmItem> { itemBinding, _, _ ->
             itemBinding.set(BR.item, R.layout.item_film)
-                .bindExtra(BR.listener, this@FilmsViewModel)
+                    .bindExtra(BR.listener, this@FilmsViewModel)
         }
         map<FilmsHeaderItem>(BR.item, R.layout.item_films_header)
     }
@@ -48,8 +47,8 @@ class FilmsViewModel internal constructor(
 
     fun groupedByMonth(items: List<Movie>): List<Any> {
         val mappings = items.sortedByDescending { it.releaseDate }
-            .groupBy { it.releaseDate.monthOfYear() }
-            .mapValues { it.value.sortedByDescending { it.rating } }
+                .groupBy { it.releaseDate.monthOfYear() }
+                .mapValues { it.value.sortedByDescending { it.rating } }
 
         val groupedItems = mutableListOf<Any>()
         mappings.keys.forEach { month ->
@@ -72,9 +71,9 @@ class FilmsViewModel internal constructor(
 }
 
 class FilmsFragment : BaseBoundVmFragment<FragmentFilmsBinding, FilmsViewModel>(
-    layoutId = R.layout.fragment_films,
-    vmClass = FilmsViewModel::class,
-    vmSetter = { it::setVm }
+        layoutId = R.layout.fragment_films,
+        vmClass = FilmsViewModel::class,
+        vmSetter = { it::setVm }
 ) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

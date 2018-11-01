@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.DiffUtil
  * @return `DiffUtil.ItemCallback<T>`
  */
 inline fun <T : Any> diffCallback(
-    crossinline areItemsTheSame: (old: T, new: T) -> Boolean,
-    crossinline areContentsTheSame: (old: T, new: T) -> Boolean
+        crossinline areContentsTheSame: (old: T, new: T) -> Boolean = { old, new -> old == new },
+        crossinline areItemsTheSame: (old: T, new: T) -> Boolean
 ): DiffUtil.ItemCallback<T> = object : DiffUtil.ItemCallback<T>() {
     override fun areItemsTheSame(oldItem: T, newItem: T): Boolean = areItemsTheSame(oldItem, newItem)
     override fun areContentsTheSame(oldItem: T, newItem: T): Boolean = areContentsTheSame(oldItem, newItem)
@@ -22,20 +22,20 @@ inline fun <T : Any> diffCallback(
  * @return `DiffUtil.ItemCallback<Any>`
  */
 inline fun <reified T : Any> genericDiffCallback(
-    crossinline areItemsTheSame: (old: T, new: T) -> Boolean,
-    crossinline areContentsTheSame: (old: T, new: T) -> Boolean = { old, new -> old == new }
+        crossinline areContentsTheSame: (old: T, new: T) -> Boolean = { old, new -> old == new },
+        crossinline areItemsTheSame: (old: T, new: T) -> Boolean
 ): DiffUtil.ItemCallback<Any> = object : DiffUtil.ItemCallback<Any>() {
     override fun areItemsTheSame(old: Any, new: Any): Boolean =
-        if (old is T && new is T) {
-            areItemsTheSame(old, new)
-        } else {
-            old == new
-        }
+            if (old is T && new is T) {
+                areItemsTheSame(old, new)
+            } else {
+                old == new
+            }
 
     override fun areContentsTheSame(old: Any, new: Any): Boolean =
-        if (old is T && new is T) {
-            areContentsTheSame(old, new)
-        } else {
-            old == new
-        }
+            if (old is T && new is T) {
+                areContentsTheSame(old, new)
+            } else {
+                old == new
+            }
 }
