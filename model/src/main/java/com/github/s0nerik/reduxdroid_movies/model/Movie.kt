@@ -5,7 +5,7 @@ import org.joda.time.DateTime
 
 @Serializable
 data class Movie(
-    val id: Int,
+    val id: Long,
     val name: String,
     val description: String,
     val releaseDate: DateTime,

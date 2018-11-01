@@ -5,7 +5,7 @@ import com.github.s0nerik.reduxdroid_movies.repo.network.util.parseMovieDbDate
 import org.joda.time.DateTime
 
 internal data class ApiMovie(
-    val id: Int,
+    val id: Long,
     val voteCount: Int,
     val voteAverage: Float,
     val title: String?,

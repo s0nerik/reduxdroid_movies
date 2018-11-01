@@ -13,6 +13,7 @@ internal class Module : AppModule({
     reducer(::loadingStart)
     reducer(::loadingSuccess)
     reducer(::loadingError)
+    reducer(::updateMoviesList)
 
     viewModel { FilmsViewModel(get(), get(), get(), get(), get()) }
 })
@@ -21,32 +22,42 @@ internal class Module : AppModule({
 
 @Serializable
 data class FilmsState internal constructor(
-    val items: List<Movie> = emptyList(),
-    val isLoading: Boolean = false,
-    val loadingError: String? = null
+        val items: List<Movie> = emptyList(),
+        val isLoading: Boolean = false,
+        val loadingError: String? = null
 )
 
 // Actions
 
 internal sealed class Loading {
     object Start : Loading()
-    @Serializable data class Success(val data: List<Movie>) : Loading()
-    @Serializable data class Error(val error: Throwable) : Loading()
+    @Serializable
+    data class Success(val data: List<Movie>) : Loading()
+
+    @Serializable
+    data class Error(val error: Throwable) : Loading()
 }
+
+@Serializable
+internal data class UpdateMoviesList(val data: List<Movie>)
 
 // Reducers
 
 internal fun loadingStart(a: Loading.Start, s: FilmsState) = s.copy(
-    isLoading = true
+        isLoading = true
 )
 
 internal fun loadingSuccess(a: Loading.Success, s: FilmsState) = s.copy(
-    isLoading = false,
-    loadingError = null,
-    items = a.data
+        isLoading = false,
+        loadingError = null,
+        items = a.data
 )
 
 internal fun loadingError(a: Loading.Error, s: FilmsState) = s.copy(
-    isLoading = false,
-    loadingError = a.error.localizedMessage
+        isLoading = false,
+        loadingError = a.error.localizedMessage
+)
+
+internal fun updateMoviesList(a: UpdateMoviesList, s: FilmsState) = s.copy(
+        items = a.data
 )

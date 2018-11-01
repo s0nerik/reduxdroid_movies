@@ -63,7 +63,7 @@ class FilmsViewModel internal constructor(
     }
 
     override fun toggleFavorite(item: FilmItem) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        dispatch(toggleFavorite(repo, item.movie))
     }
 
     override fun share(item: FilmItem) {
