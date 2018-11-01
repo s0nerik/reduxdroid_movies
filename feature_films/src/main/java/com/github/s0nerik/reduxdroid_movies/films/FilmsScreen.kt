@@ -62,11 +62,11 @@ class FilmsViewModel internal constructor(
         return groupedItems
     }
 
-    override fun toggleFavorite(movie: Movie) {
+    override fun toggleFavorite(item: FilmItem) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun share(movie: Movie) {
+    override fun share(item: FilmItem) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

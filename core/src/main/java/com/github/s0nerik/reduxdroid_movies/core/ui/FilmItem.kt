@@ -8,7 +8,7 @@ data class FilmItem(
     val movie: Movie
 ) {
     interface Listener {
-        fun toggleFavorite(movie: Movie)
-        fun share(movie: Movie)
+        fun toggleFavorite(item: FilmItem)
+        fun share(item: FilmItem)
     }
 }
