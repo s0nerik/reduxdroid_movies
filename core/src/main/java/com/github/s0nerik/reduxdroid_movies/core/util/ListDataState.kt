@@ -10,12 +10,12 @@ data class ListDataState<T> internal constructor(
         val loadingError: String? = null
 ) {
     internal enum class State {
-        NONE, LOADING, DATA, EMPTY, ERROR
+        NONE, LOADING, DATA, REFRESHING, EMPTY, ERROR
     }
 
     @Transient
     val items: List<T>
-        get() = if (_state == State.DATA) _items else emptyList()
+        get() = if (_state == State.DATA || _state == State.REFRESHING) _items else emptyList()
 
     @Transient
     val isEmpty: Boolean
@@ -27,8 +27,13 @@ data class ListDataState<T> internal constructor(
 
     @Transient
     val canRefresh: Boolean
-        get() = _state != State.LOADING
+        get() = _state != State.REFRESHING
 
+    @Transient
+    val isRefreshing: Boolean
+        get() = _state == State.REFRESHING
+
+    //region Loading
     fun loading() = copy(
             _state = State.LOADING
     )
@@ -42,6 +47,23 @@ data class ListDataState<T> internal constructor(
             _state = State.ERROR,
             loadingError = t.localizedMessage
     )
+    //endregion
+
+    //region Refreshing
+    fun refreshing() = copy(
+            _state = State.REFRESHING
+    )
+
+    fun successRefreshing(newItems: List<T>) = copy(
+            _state = State.DATA,
+            _items = newItems
+    )
+
+    fun errorRefreshing(t: Throwable) = copy(
+            _state = State.ERROR,
+            loadingError = t.localizedMessage
+    )
+    //endregion
 
     fun setItems(newItems: List<T>) = copy(
             _items = newItems

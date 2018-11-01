@@ -14,6 +14,9 @@ internal class Module : AppModule({
     reducer(::loadingStart)
     reducer(::loadingSuccess)
     reducer(::loadingError)
+    reducer(::refreshingStart)
+    reducer(::refreshingSuccess)
+    reducer(::refreshingError)
     reducer(::updateMoviesList)
 })
 
@@ -32,6 +35,14 @@ data class SharedState internal constructor(
         get() = filmsState.isLoading
 
     @Transient
+    val isRefreshing: Boolean
+        get() = filmsState.isRefreshing
+
+    @Transient
+    val canRefresh: Boolean
+        get() = filmsState.canRefresh
+
+    @Transient
     val loadingError: String?
         get() = filmsState.loadingError
 }
@@ -46,6 +57,16 @@ internal sealed class Loading {
 
     @Serializable
     data class Error(val error: Throwable) : Loading()
+}
+
+internal sealed class Refreshing {
+    object Start : Refreshing()
+
+    @Serializable
+    data class Success(val data: List<Movie>) : Refreshing()
+
+    @Serializable
+    data class Error(val error: Throwable) : Refreshing()
 }
 
 @Serializable
@@ -63,6 +84,18 @@ internal fun loadingSuccess(a: Loading.Success, s: SharedState) = s.copy(
 
 internal fun loadingError(a: Loading.Error, s: SharedState) = s.copy(
         filmsState = s.filmsState.errorLoading(a.error)
+)
+
+internal fun refreshingStart(a: Refreshing.Start, s: SharedState) = s.copy(
+        filmsState = s.filmsState.refreshing()
+)
+
+internal fun refreshingSuccess(a: Refreshing.Success, s: SharedState) = s.copy(
+        filmsState = s.filmsState.successRefreshing(a.data)
+)
+
+internal fun refreshingError(a: Refreshing.Error, s: SharedState) = s.copy(
+        filmsState = s.filmsState.errorRefreshing(a.error)
 )
 
 internal fun updateMoviesList(a: UpdateMoviesList, s: SharedState) = s.copy(

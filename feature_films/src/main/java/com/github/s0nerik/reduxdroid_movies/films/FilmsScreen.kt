@@ -15,6 +15,7 @@ import com.github.s0nerik.reduxdroid_movies.model.Movie
 import com.github.s0nerik.reduxdroid_movies.repo.MovieDbRepository
 import com.github.s0nerik.reduxdroid_movies.shared_state.SharedState
 import com.github.s0nerik.reduxdroid_movies.shared_state.loadFilms
+import com.github.s0nerik.reduxdroid_movies.shared_state.refreshFilms
 import com.github.s0nerik.reduxdroid_movies.shared_state.toggleFavorite
 import kotlinx.android.synthetic.main.fragment_films.*
 import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
@@ -28,11 +29,7 @@ class FilmsViewModel internal constructor(
         private val repo: MovieDbRepository
 ) : BaseViewModel(store, res, dispatcher, ctx), FilmItem.Listener {
     val items = state.get(SharedState::films).map(this::groupedByMonth)
-    val isLoading = state.get(SharedState::isLoading)
-    val loadingError = state.get(SharedState::loadingError, "")
-
     val diff = genericDiffCallback<FilmItem> { old, new -> old.movie.id == new.movie.id }
-
     val itemBinding = OnItemBindClass<Any>().apply {
         map<FilmItem> { itemBinding, _, _ ->
             itemBinding.set(BR.item, R.layout.item_film)
@@ -40,6 +37,10 @@ class FilmsViewModel internal constructor(
         }
         map<FilmsHeaderItem>(BR.item, R.layout.item_films_header)
     }
+
+    val isLoading = state.get(SharedState::isLoading)
+    val isRefreshing = state.get(SharedState::isRefreshing)
+    val loadingError = state.get(SharedState::loadingError, "")
 
     fun loadItems() {
         if (currentState.get(SharedState::films).isEmpty())
@@ -60,6 +61,11 @@ class FilmsViewModel internal constructor(
         }
 
         return groupedItems
+    }
+
+    fun refresh() {
+        if (currentState.get(SharedState::canRefresh))
+            dispatch(refreshFilms(repo))
     }
 
     override fun toggleFavorite(item: FilmItem) {

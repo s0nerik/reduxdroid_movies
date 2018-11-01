@@ -19,17 +19,13 @@ internal class MovieDbRepositoryImpl(
         private val networkRepo: NetworkRepository,
         ctx: CoroutineContextHolder
 ) : MovieDbRepository, CoroutineContextHolder by ctx {
-    override suspend fun refresh(): List<Movie> = coroutineScope {
-        localRepo.clear()
-        getMovies()
-    }
 
-    override suspend fun getMovies(): List<Movie> = coroutineScope {
+    private suspend fun doGetMovies(bypassCache: Boolean): List<Movie> = coroutineScope {
         var localMovies = localRepo.getMovies()
 
-        if (localMovies.isEmpty()) {
+        if (localMovies.isEmpty() || bypassCache) {
             val to = DateTime.now()
-            val from = to - 3.months()
+            val from = to - MOVIES_PERIOD_MONTHS.months()
 
             val networkMovies = networkRepo.getMovies(from, to)
             localRepo.replaceMovies(networkMovies)
@@ -40,5 +36,12 @@ internal class MovieDbRepositoryImpl(
         localMovies
     }
 
+    override suspend fun getMovies(): List<Movie> = doGetMovies(bypassCache = false)
+    override suspend fun refresh(): List<Movie> = doGetMovies(bypassCache = true)
+
     override suspend fun toggleFavorite(movie: Movie) = localRepo.toggleFavorite(movie)
+
+    companion object {
+        private const val MOVIES_PERIOD_MONTHS = 3
+    }
 }

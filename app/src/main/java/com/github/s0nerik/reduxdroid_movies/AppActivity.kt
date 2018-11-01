@@ -1,8 +1,8 @@
 package com.github.s0nerik.reduxdroid_movies
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.github.s0nerik.reduxdroid.activity_result.ActivityResultMiddleware
@@ -34,22 +34,16 @@ class AppActivity : AppCompatActivity() {
             stateSerializer.debugMode = true
         }
 
+        if (savedInstanceState != null)
+            stateSerializer.restore()
+
         if (savedInstanceState == null)
             vm.ensureLoggedIn()
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-
-        if (!isChangingConfigurations)
-            stateSerializer.save()
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
-
-        if (!isChangingConfigurations)
-            stateSerializer.restore()
+        stateSerializer.save()
     }
 
     override fun onDestroy() {

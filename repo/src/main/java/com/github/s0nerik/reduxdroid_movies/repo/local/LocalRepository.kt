@@ -14,17 +14,40 @@ internal class LocalRepository(
 ) : CoroutineContextHolder by ctx {
     private val moviesBox by lazy { boxStore.boxFor<DbMovie>() }
 
-    suspend fun clear(): Unit = coroutineScope {
+    suspend fun replaceMovies(movies: List<Movie>): Unit = coroutineScope {
         withContext(io) {
+            val oldMovies = moviesBox.all
+            val newMovies = movies.map { DbMovie.fromLocal(it) }
+            val mergedMovies = mergeMovies(oldMovies, newMovies)
             moviesBox.removeAll()
+            moviesBox.put(mergedMovies)
         }
     }
 
-    suspend fun replaceMovies(movies: List<Movie>): Unit = coroutineScope {
-        clear()
-        withContext(io) {
-            moviesBox.put(movies.map { DbMovie.fromLocal(it) })
+    /**
+     * Merges isFavorite state from old movies
+     *
+     * NOTE: this method can mutate `newMovies` item contents
+     */
+    internal suspend fun mergeMovies(oldMovies: List<DbMovie>, newMovies: List<DbMovie>): List<DbMovie> = coroutineScope {
+        val oldFavorites = mutableMapOf<Long, MutableList<DbMovie>>()
+        oldMovies.asSequence()
+                .filter { it.isFavorite }
+                .groupByTo(oldFavorites) { it.id }
+
+        val oldFavoriteIds = oldFavorites.keys
+
+        val mergedMovies = mutableListOf<DbMovie>()
+        newMovies.mapTo(mergedMovies) { movie ->
+            if (movie.id in oldFavoriteIds) {
+                movie.isFavorite = true
+                oldFavorites -= movie.id
+            }
+            movie
         }
+        mergedMovies += oldFavorites.values.map { it[0] }
+
+        return@coroutineScope mergedMovies
     }
 
     suspend fun getMovies(): List<Movie> = coroutineScope {

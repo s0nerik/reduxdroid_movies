@@ -18,6 +18,18 @@ fun CoroutineScope.loadFilms(repo: MovieDbRepository): Thunk = { dispatch ->
     }
 }
 
+fun CoroutineScope.refreshFilms(repo: MovieDbRepository): Thunk = { dispatch ->
+    launch {
+        try {
+            dispatch(Refreshing.Start)
+            val movies = repo.refresh()
+            dispatch(Refreshing.Success(movies))
+        } catch (t: Throwable) {
+            dispatch(Refreshing.Error(t))
+        }
+    }
+}
+
 fun CoroutineScope.toggleFavorite(repo: MovieDbRepository, movie: Movie): Thunk = { dispatch ->
     launch {
         repo.toggleFavorite(movie)
