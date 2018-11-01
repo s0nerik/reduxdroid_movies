@@ -47,6 +47,17 @@
                     android:fontFamily="@font/pacifico"
                     android:layout_gravity="center"
                     />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:padding="16dp"
+                    android:scaleType="center"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:onClick='@{() -> vm.logOut()}'
+                    app:srcCompat="@drawable/exit"
+                    />
             </FrameLayout>
         </androidx.appcompat.widget.Toolbar>
 

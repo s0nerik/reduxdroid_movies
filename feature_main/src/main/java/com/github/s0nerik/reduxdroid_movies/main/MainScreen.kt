@@ -20,7 +20,11 @@ class MainViewModel internal constructor(
     dispatcher: ActionDispatcher,
     res: ResourceResolver,
     ctx: CoroutineContextHolder
-) : BaseViewModel(store, res, dispatcher, ctx)
+) : BaseViewModel(store, res, dispatcher, ctx) {
+    fun logOut() {
+        TODO()
+    }
+}
 
 class MainFragment : BaseBoundVmNavigationFragment<FragmentMainBinding, MainViewModel>(
     layoutId = R.layout.fragment_main,
