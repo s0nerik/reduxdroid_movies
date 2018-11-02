@@ -21,7 +21,7 @@ internal class NetworkRepository(
         val firstPage = api.getMoviesForPeriod(startDate, endDate, 1).await()
         moviePages += firstPage
 
-        val remainingPages = firstPage.totalResults / firstPage.results.size - 1
+        val remainingPages = firstPage.totalPages - 1
         if (remainingPages > 0) {
             val deferreds = (2 until 2 + remainingPages).map { page ->
                 api.getMoviesForPeriod(startDate, endDate, page)
