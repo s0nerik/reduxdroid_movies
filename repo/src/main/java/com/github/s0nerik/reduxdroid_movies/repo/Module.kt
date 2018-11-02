@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 internal class Module : AppModule({
     single { LocalRepository(get(), get()) }
-    single { NetworkRepository(get()) }
+    single { NetworkRepository(get(), get()) }
     single { MovieDbRepositoryImpl(get(), get(), get()) as MovieDbRepository }
 
     single(name = "MovieDb") {

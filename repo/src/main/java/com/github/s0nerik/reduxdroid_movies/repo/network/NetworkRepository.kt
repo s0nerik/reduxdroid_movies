@@ -1,17 +1,18 @@
 package com.github.s0nerik.reduxdroid_movies.repo.network
 
+import com.github.s0nerik.reduxdroid_movies.core.util.CoroutineContextHolder
 import com.github.s0nerik.reduxdroid_movies.model.Movie
 import com.github.s0nerik.reduxdroid_movies.repo.network.model.ApiMoviesPage
 import com.github.s0nerik.reduxdroid_movies.repo.network.util.formatMovieDbDate
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import org.joda.time.DateTime
-import java.util.*
 
 internal class NetworkRepository(
-    private val api: MovieDbService
-) {
-    suspend fun getMovies(from: DateTime, to: DateTime): List<Movie> = coroutineScope {
+        private val api: MovieDbService,
+        ctx: CoroutineContextHolder
+) : CoroutineContextHolder by ctx {
+    suspend fun getMovies(from: DateTime, to: DateTime): List<Movie> = withContext(io) {
         val startDate = formatMovieDbDate(from)
         val endDate = formatMovieDbDate(to)
 
@@ -22,7 +23,7 @@ internal class NetworkRepository(
 
         val remainingPages = firstPage.totalResults / firstPage.results.size - 1
         if (remainingPages > 0) {
-            val deferreds = (2 until 2+remainingPages).map { page ->
+            val deferreds = (2 until 2 + remainingPages).map { page ->
                 api.getMoviesForPeriod(startDate, endDate, page)
             }
             val pages = awaitAll(deferreds = *deferreds.toTypedArray())
@@ -31,6 +32,6 @@ internal class NetworkRepository(
 
         val movies = moviePages.flatMap { it.results }.map { it.toLocal() }
 
-        return@coroutineScope movies
+        return@withContext movies
     }
 }

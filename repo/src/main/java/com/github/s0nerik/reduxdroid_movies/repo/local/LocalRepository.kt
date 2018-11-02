@@ -5,7 +5,6 @@ import com.github.s0nerik.reduxdroid_movies.model.Movie
 import com.github.s0nerik.reduxdroid_movies.repo.local.model.DbMovie
 import io.objectbox.BoxStore
 import io.objectbox.kotlin.boxFor
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 
 internal class LocalRepository(
@@ -14,14 +13,12 @@ internal class LocalRepository(
 ) : CoroutineContextHolder by ctx {
     private val moviesBox by lazy { boxStore.boxFor<DbMovie>() }
 
-    suspend fun replaceMovies(movies: List<Movie>): Unit = coroutineScope {
-        withContext(io) {
-            val oldMovies = moviesBox.all
-            val newMovies = movies.map { DbMovie.fromLocal(it) }
-            val mergedMovies = mergeMovies(oldMovies, newMovies)
-            moviesBox.removeAll()
-            moviesBox.put(mergedMovies)
-        }
+    suspend fun replaceMovies(movies: List<Movie>): Unit = withContext(io) {
+        val oldMovies = moviesBox.all
+        val newMovies = movies.map { DbMovie.fromLocal(it) }
+        val mergedMovies = mergeMovies(oldMovies, newMovies)
+        moviesBox.removeAll()
+        moviesBox.put(mergedMovies)
     }
 
     /**
@@ -29,7 +26,7 @@ internal class LocalRepository(
      *
      * NOTE: this method can mutate `newMovies` item contents
      */
-    internal suspend fun mergeMovies(oldMovies: List<DbMovie>, newMovies: List<DbMovie>): List<DbMovie> = coroutineScope {
+    internal suspend fun mergeMovies(oldMovies: List<DbMovie>, newMovies: List<DbMovie>): List<DbMovie> = withContext(io) {
         val oldFavorites = mutableMapOf<Long, MutableList<DbMovie>>()
         oldMovies.asSequence()
                 .filter { it.isFavorite }
@@ -47,20 +44,17 @@ internal class LocalRepository(
         }
         mergedMovies += oldFavorites.values.map { it[0] }
 
-        return@coroutineScope mergedMovies
+        return@withContext mergedMovies
     }
 
-    suspend fun getMovies(): List<Movie> = coroutineScope {
-        withContext(io) {
-            moviesBox.all.map { it.toLocal() }
-        }
+    suspend fun getMovies(): List<Movie> = withContext(io) {
+        moviesBox.all.map { it.toLocal() }
     }
 
-    suspend fun toggleFavorite(movie: Movie): Unit = coroutineScope {
-        withContext(io) {
-            val newMovie = movie.copy(isFavorite = !movie.isFavorite)
-            moviesBox.put(DbMovie.fromLocal(newMovie))
-        }
+    suspend fun toggleFavorite(movie: Movie): Unit = withContext(io) {
+        val newMovie = movie.copy(isFavorite = !movie.isFavorite)
+        moviesBox.put(DbMovie.fromLocal(newMovie))
+
         Unit
     }
 }
