@@ -10,3 +10,5 @@ include ":shared_state"
 include ":feature_main"
 include ":feature_films"
 include ":feature_favorites"
+
+include ":core_test"

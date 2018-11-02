@@ -1,5 +1,3 @@
-import Versions.bindingCollectionAdapter
-
 object Versions {
     val min_sdk = 21
     val compile_sdk = 28
@@ -105,14 +103,14 @@ object Libs {
 
     //region Networking
     val okHttp = arrayOf(
-        "com.squareup.okhttp3:okhttp:3.10.0",
-        "com.github.simonpercic:oklog3:2.3.0",
-        "com.squareup.okhttp3:logging-interceptor:3.10.0"
+            "com.squareup.okhttp3:okhttp:3.10.0",
+            "com.github.simonpercic:oklog3:2.3.0",
+            "com.squareup.okhttp3:logging-interceptor:3.10.0"
     )
 
     val retrofit = arrayOf(
-        "com.squareup.retrofit2:retrofit:${Versions.retrofit}",
-        "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+            "com.squareup.retrofit2:retrofit:${Versions.retrofit}",
+            "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
     )
 
     val retrofit_adapter_coroutines = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
@@ -124,13 +122,24 @@ object Libs {
 
     //region Testing
     val junit = "junit:junit:4.12"
-    val supportRunner = "com.android.support.test:runner:1.0.2"
-    val supportEspresso = "com.android.support.test.espresso:espresso-core:3.0.2"
-    val mockito = "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC1"
-    val robolectric = "org.robolectric:robolectric:3.8"
+    val koin_test = "org.koin:koin-test:${Versions.koin}"
+    val androidx_test = arrayOf(
+            "androidx.test:core:1.0.0",
+            "androidx.test.ext:junit:1.0.0",
+            "androidx.test.ext:truth:1.0.0",
+            "androidx.test.espresso:espresso-core:3.1.0"
+    )
+    val mockito = "org.mockito:mockito-core:2.23.0"
 
-    val unitTest = arrayOf(junit, mockito, robolectric)
-    val androidTest = arrayOf(supportRunner, supportEspresso)
+    val robolectric = "org.robolectric:robolectric:4.0.1"
+
+    val fragment_test_rule = arrayOf(
+            "com.github.s0nerik.FragmentTestRule:fragment-test-rule:76d9e7f4cc",
+            "com.github.s0nerik.FragmentTestRule:fragment-test-rule-extras:76d9e7f4cc"
+    )
+
+    val unitTest = arrayOf(junit, *androidx_test, *fragment_test_rule, koin_test, robolectric, mockito)
+    val androidTest = arrayOf(junit, *androidx_test, *fragment_test_rule, koin_test, robolectric, mockito)
     //endregion
 
     //region Sets

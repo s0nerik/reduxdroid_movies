@@ -11,11 +11,17 @@ android {
         minSdkVersion Versions.min_sdk
         targetSdkVersion Versions.target_sdk
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     dataBinding {
         enabled = true
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 }
 
@@ -25,5 +31,6 @@ kapt {
 
 dependencies {
     testImplementation Libs.unitTest
+    testImplementation project(":core_test")
     androidTestImplementation Libs.androidTest
 }

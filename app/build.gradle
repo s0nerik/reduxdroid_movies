@@ -11,11 +11,18 @@ android {
         targetSdkVersion Versions.target_sdk
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     dexOptions {
         preDexLibraries true
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 
     buildTypes {
@@ -42,5 +49,6 @@ dependencies {
     implementation "me.tatarka.redux:redux-android:0.10"
 
     testImplementation Libs.unitTest
+    testImplementation project(":core_test")
     androidTestImplementation Libs.androidTest
 }
