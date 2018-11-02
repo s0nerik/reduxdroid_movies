@@ -13,6 +13,7 @@ import com.github.s0nerik.reduxdroid_movies.favorites.databinding.FragmentFavori
 import com.github.s0nerik.reduxdroid_movies.repo.MovieDbRepository
 import com.github.s0nerik.reduxdroid_movies.shared_state.SharedState
 import com.github.s0nerik.reduxdroid_movies.shared_state.loadFilms
+import com.github.s0nerik.reduxdroid_movies.shared_state.share
 import com.github.s0nerik.reduxdroid_movies.shared_state.toggleFavorite
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import me.tatarka.bindingcollectionadapter2.itemBindingOf
@@ -43,7 +44,7 @@ class FavoritesViewModel internal constructor(
     }
 
     override fun share(item: FilmItem) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        dispatch(share(item.movie))
     }
 }
 

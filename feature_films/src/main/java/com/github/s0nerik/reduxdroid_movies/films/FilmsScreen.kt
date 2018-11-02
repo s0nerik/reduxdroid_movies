@@ -1,22 +1,22 @@
 package com.github.s0nerik.reduxdroid_movies.films
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
+import com.github.s0nerik.reduxdroid.activity_result.StartActivityForResult
 import com.github.s0nerik.reduxdroid.core.ActionDispatcher
 import com.github.s0nerik.reduxdroid.core.StateStore
 import com.github.s0nerik.reduxdroid.livedata.get
 import com.github.s0nerik.reduxdroid_movies.core.base.BaseBoundVmFragment
 import com.github.s0nerik.reduxdroid_movies.core.base.BaseViewModel
+import com.github.s0nerik.reduxdroid_movies.core.middleware.IntentAction
 import com.github.s0nerik.reduxdroid_movies.core.ui.FilmItem
 import com.github.s0nerik.reduxdroid_movies.core.util.*
 import com.github.s0nerik.reduxdroid_movies.films.databinding.FragmentFilmsBinding
 import com.github.s0nerik.reduxdroid_movies.model.Movie
 import com.github.s0nerik.reduxdroid_movies.repo.MovieDbRepository
-import com.github.s0nerik.reduxdroid_movies.shared_state.SharedState
-import com.github.s0nerik.reduxdroid_movies.shared_state.loadFilms
-import com.github.s0nerik.reduxdroid_movies.shared_state.refreshFilms
-import com.github.s0nerik.reduxdroid_movies.shared_state.toggleFavorite
+import com.github.s0nerik.reduxdroid_movies.shared_state.*
 import kotlinx.android.synthetic.main.fragment_films.*
 import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
 import me.tatarka.bindingcollectionadapter2.map
@@ -73,7 +73,7 @@ class FilmsViewModel internal constructor(
     }
 
     override fun share(item: FilmItem) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        dispatch(share(item.movie))
     }
 }
 

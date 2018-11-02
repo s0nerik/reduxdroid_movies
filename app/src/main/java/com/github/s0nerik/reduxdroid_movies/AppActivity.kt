@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.github.s0nerik.reduxdroid.activity_result.ActivityResultMiddleware
 import com.github.s0nerik.reduxdroid.navigation.middleware.NavigationMiddleware
 import com.github.s0nerik.reduxdroid.state_serializer.AppStateSerializer
+import com.github.s0nerik.reduxdroid_movies.core.middleware.IntentActionMiddleware
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -19,6 +20,7 @@ class AppActivity : AppCompatActivity() {
     private val stateSerializer: AppStateSerializer by inject()
 
     private val activityResultMiddleware: ActivityResultMiddleware by inject()
+    private val intentActionMiddleware: IntentActionMiddleware by inject()
 
     private val navCtrl: NavController
         get() = supportFragmentManager.findFragmentById(R.id.navHostFragment)!!.findNavController()
@@ -28,6 +30,7 @@ class AppActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         activityResultMiddleware.attach(this)
+        intentActionMiddleware.attach(this)
         navMiddleware.attachNavController(navCtrl)
 
         if (BuildConfig.DEBUG) {
