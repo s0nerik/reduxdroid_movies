@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_films.*
 import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
 import me.tatarka.bindingcollectionadapter2.map
 
-class FilmsViewModel internal constructor(
+internal class FilmsViewModel(
         store: StateStore,
         dispatcher: ActionDispatcher,
         res: ResourceResolver,
@@ -73,7 +73,7 @@ class FilmsViewModel internal constructor(
     }
 }
 
-class FilmsFragment : BaseBoundVmFragment<FragmentFilmsBinding, FilmsViewModel>(
+internal class FilmsFragment : BaseBoundVmFragment<FragmentFilmsBinding, FilmsViewModel>(
         layoutId = R.layout.fragment_films,
         vmClass = FilmsViewModel::class,
         vmSetter = { it::setVm }
