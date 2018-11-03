@@ -1,16 +1,12 @@
 package com.github.s0nerik.reduxdroid_movies.films
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.View
-import com.github.s0nerik.reduxdroid.activity_result.StartActivityForResult
 import com.github.s0nerik.reduxdroid.core.ActionDispatcher
 import com.github.s0nerik.reduxdroid.core.StateStore
 import com.github.s0nerik.reduxdroid.livedata.get
 import com.github.s0nerik.reduxdroid_movies.core.base.BaseBoundVmFragment
 import com.github.s0nerik.reduxdroid_movies.core.base.BaseViewModel
-import com.github.s0nerik.reduxdroid_movies.core.middleware.IntentAction
 import com.github.s0nerik.reduxdroid_movies.core.ui.FilmItem
 import com.github.s0nerik.reduxdroid_movies.core.util.*
 import com.github.s0nerik.reduxdroid_movies.films.databinding.FragmentFilmsBinding
@@ -95,9 +91,5 @@ class FilmsFragment : BaseBoundVmFragment<FragmentFilmsBinding, FilmsViewModel>(
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         recycler.saveState(outState)
-    }
-
-    companion object {
-        private const val RECYCLER_STATE = "RECYCLER_STATE"
     }
 }
