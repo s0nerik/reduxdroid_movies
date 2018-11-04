@@ -1,12 +1,19 @@
 package com.github.s0nerik.reduxdroid_movies.core_test
 
+import android.app.Application
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
 import com.github.s0nerik.reduxdroid.core.di.AppModule
+import com.github.s0nerik.reduxdroid.core.di.combinedReducer
+import com.github.s0nerik.reduxdroid.core.di.middlewares
+import com.github.s0nerik.reduxdroid.core.middleware.Middleware
 import com.github.s0nerik.reduxdroid_movies.core.util.CoroutineContextHolder
 import io.github.classgraph.ClassGraph
+import me.tatarka.redux.Reducer
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
 
-private fun appModules(vararg whitelistPackages: String): List<Module> {
+fun appModules(vararg whitelistPackages: String): List<Module> {
     val classGraph = ClassGraph().apply {
         enableAllInfo()
         whitelistPackages("com.github.s0nerik.reduxdroid")
@@ -25,7 +32,13 @@ private fun appModules(vararg whitelistPackages: String): List<Module> {
     return AppModule.registeredModules
 }
 
-val appModules = appModules("com.github.s0nerik.reduxdroid_movies")
-val testModule = module {
+fun testModule(middlewares: () -> List<Middleware<*, *>> = { emptyList() }) = module {
     single(override = true) { TestCoroutineContextHolder as CoroutineContextHolder }
+    single { TestMiddleware(get()) }
+    combinedReducer() bind Reducer::class
+    middlewares {
+        middlewares() + get<TestMiddleware>()
+    }
+    single(override = true) { ApplicationProvider.getApplicationContext<Application>() }
+    single(override = true) { ApplicationProvider.getApplicationContext<Context>() }
 }

@@ -4,4 +4,5 @@ dependencies {
     implementation project(":core")
     implementation "io.github.classgraph:classgraph:4.4.1"
     implementation Libs.mockito
+    implementation Libs.androidx_test
 }
