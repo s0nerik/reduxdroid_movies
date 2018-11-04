@@ -18,3 +18,6 @@ class TestMiddleware(store: StateStore) : Middleware<Any, Any> {
 
     fun reset() = testMiddleware.reset()
 }
+
+val com.github.s0nerik.reduxdroid_movies.core_test.TestMiddleware.lastState: AppState
+    get() = states.last()

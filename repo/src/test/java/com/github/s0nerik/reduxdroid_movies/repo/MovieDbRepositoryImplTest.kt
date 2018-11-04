@@ -7,19 +7,28 @@ import com.github.s0nerik.reduxdroid_movies.repo.local.LocalRepository
 import com.github.s0nerik.reduxdroid_movies.repo.network.NetworkRepository
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
+import org.junit.Before
 import org.junit.Test
+import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
 
 class MovieDbRepositoryImplTest {
+    @Mock
+    internal lateinit var localRepo: LocalRepository
+
+    @Mock
+    internal lateinit var networkRepo: NetworkRepository
+
+    @Before
+    fun setUp() = MockitoAnnotations.initMocks(this)
+
     @Test
     fun `uses only local repo if it contains data`() = runBlocking {
         // Given
-        val localRepo = Mockito.mock(LocalRepository::class.java)
         Mockito.`when`(localRepo.getMovies()).thenReturn(
                 listOf(Movie(0, "", "", DateTime(0), "", false, 0f))
         )
-
-        val networkRepo = Mockito.mock(NetworkRepository::class.java)
         val hybridRepo = MovieDbRepositoryImpl(localRepo, networkRepo, TestCoroutineContextHolder)
 
         // When
@@ -33,10 +42,7 @@ class MovieDbRepositoryImplTest {
     @Test
     fun `uses network repo if local repo doesn't contain data`() = runBlocking {
         // Given
-        val localRepo = Mockito.mock(LocalRepository::class.java)
         Mockito.`when`(localRepo.getMovies()).thenReturn(emptyList())
-
-        val networkRepo = Mockito.mock(NetworkRepository::class.java)
         val hybridRepo = MovieDbRepositoryImpl(localRepo, networkRepo, TestCoroutineContextHolder)
 
         // When

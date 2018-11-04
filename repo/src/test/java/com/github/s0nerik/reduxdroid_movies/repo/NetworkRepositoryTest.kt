@@ -1,22 +1,31 @@
 package com.github.s0nerik.reduxdroid_movies.repo
 
 import com.github.s0nerik.reduxdroid_movies.core_test.TestCoroutineContextHolder
+import com.github.s0nerik.reduxdroid_movies.core_test.util.runBlockingTest
 import com.github.s0nerik.reduxdroid_movies.repo.network.MovieDbService
 import com.github.s0nerik.reduxdroid_movies.repo.network.NetworkRepository
 import com.github.s0nerik.reduxdroid_movies.repo.network.model.ApiMovie
 import com.github.s0nerik.reduxdroid_movies.repo.network.model.ApiMoviesPage
 import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
-import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
+import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
+import strikt.api.expectThat
+import strikt.assertions.hasSize
 
 class NetworkRepositoryTest {
+    @Mock
+    internal lateinit var apiService: MovieDbService
+
+    @Before
+    fun setUp() = MockitoAnnotations.initMocks(this)
+
     @Test
-    fun `loads all available pages at once`() = runBlocking {
+    fun `loads all available pages at once`() = runBlockingTest {
         // Given
-        val apiService = Mockito.mock(MovieDbService::class.java)
         Mockito.`when`(
                 apiService.getMoviesForPeriod(
                         Mockito.anyString(),
@@ -44,6 +53,6 @@ class NetworkRepositoryTest {
         val movies = networkRepo.getMovies(DateTime.now(), DateTime.now())
 
         // Then
-        Assert.assertEquals(2 * 10, movies.size)
+        expectThat(movies).hasSize(2 * 10)
     }
 }

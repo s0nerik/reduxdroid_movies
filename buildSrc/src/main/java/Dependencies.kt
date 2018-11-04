@@ -130,16 +130,12 @@ object Libs {
             "androidx.test.espresso:espresso-core:3.1.0"
     )
     val mockito = "org.mockito:mockito-core:2.23.0"
+    val strikt = "io.strikt:strikt-core:0.17.0"
 
     val robolectric = "org.robolectric:robolectric:4.0.1"
 
-    val fragment_test_rule = arrayOf(
-            "com.github.s0nerik.FragmentTestRule:fragment-test-rule:76d9e7f4cc",
-            "com.github.s0nerik.FragmentTestRule:fragment-test-rule-extras:76d9e7f4cc"
-    )
-
-    val unitTest = arrayOf(junit, *androidx_test, *fragment_test_rule, koin_test, robolectric, mockito)
-    val androidTest = arrayOf(junit, *androidx_test, *fragment_test_rule, koin_test, robolectric, mockito)
+    val unitTest = arrayOf(junit, *androidx_test, koin_test, robolectric, mockito, strikt)
+    val androidTest = arrayOf(junit, *androidx_test, koin_test, robolectric, mockito, strikt)
     //endregion
 
     //region Sets

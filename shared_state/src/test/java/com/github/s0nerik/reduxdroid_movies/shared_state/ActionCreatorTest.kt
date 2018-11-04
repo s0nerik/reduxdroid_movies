@@ -4,12 +4,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.s0nerik.reduxdroid.core.ActionDispatcher
 import com.github.s0nerik.reduxdroid_movies.core_test.TestMiddleware
 import com.github.s0nerik.reduxdroid_movies.core_test.appModules
+import com.github.s0nerik.reduxdroid_movies.core_test.lastState
 import com.github.s0nerik.reduxdroid_movies.core_test.testModule
 import com.github.s0nerik.reduxdroid_movies.core_test.util.runBlockingTest
-import com.github.s0nerik.reduxdroid_movies.model.Movie
 import com.github.s0nerik.reduxdroid_movies.repo.MovieDbRepository
-import org.hamcrest.CoreMatchers.instanceOf
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,6 +17,8 @@ import org.koin.test.AutoCloseKoinTest
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
+import strikt.api.expectThat
+import strikt.assertions.*
 
 @RunWith(AndroidJUnit4::class)
 class ActionCreatorTest : AutoCloseKoinTest() {
@@ -29,9 +29,10 @@ class ActionCreatorTest : AutoCloseKoinTest() {
     private val testMiddleware: TestMiddleware by inject()
 
     @Before
-    fun before() {
-        MockitoAnnotations.initMocks(this)
+    fun setUp() = MockitoAnnotations.initMocks(this)
 
+    @Before
+    fun before() {
         startKoin(appModules + testModule())
     }
 
@@ -44,10 +45,12 @@ class ActionCreatorTest : AutoCloseKoinTest() {
         dispatcher.dispatch(loadFilms(repo))
 
         // Then
-        Assert.assertEquals(2, testMiddleware.actions.size)
-        Assert.assertThat(testMiddleware.actions[0], instanceOf(Loading.Start::class.java))
-        Assert.assertThat(testMiddleware.actions[1], instanceOf(Loading.Success::class.java))
-        Assert.assertEquals(emptyList<Movie>(), testMiddleware.states.last().get<SharedState>().films)
+        with(testMiddleware) {
+            expectThat(actions).hasSize(2)
+            expectThat(actions[0]).isA<Loading.Start>()
+            expectThat(actions[1]).isA<Loading.Success>()
+            expectThat(lastState.get(SharedState::films)).isEmpty()
+        }
     }
 
     @Test
@@ -59,9 +62,11 @@ class ActionCreatorTest : AutoCloseKoinTest() {
         dispatcher.dispatch(loadFilms(repo))
 
         // Then
-        Assert.assertEquals(2, testMiddleware.actions.size)
-        Assert.assertThat(testMiddleware.actions[0], instanceOf(Loading.Start::class.java))
-        Assert.assertThat(testMiddleware.actions[1], instanceOf(Loading.Error::class.java))
-        Assert.assertEquals("test error", testMiddleware.states.last().get<SharedState>().loadingError)
+        with(testMiddleware) {
+            expectThat(actions).hasSize(2)
+            expectThat(actions[0]).isA<Loading.Start>()
+            expectThat(actions[1]).isA<Loading.Error>()
+            expectThat(lastState.get(SharedState::loadingError)).isEqualTo("test error")
+        }
     }
 }

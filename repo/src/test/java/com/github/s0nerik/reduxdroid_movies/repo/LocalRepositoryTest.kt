@@ -3,17 +3,21 @@ package com.github.s0nerik.reduxdroid_movies.repo
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.s0nerik.reduxdroid_movies.core_test.TestCoroutineContextHolder
+import com.github.s0nerik.reduxdroid_movies.core_test.util.runBlockingTest
 import com.github.s0nerik.reduxdroid_movies.model.Movie
 import com.github.s0nerik.reduxdroid_movies.repo.local.LocalRepository
 import com.github.s0nerik.reduxdroid_movies.repo.local.model.MyObjectBox
 import io.objectbox.BoxStore
-import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import org.junit.After
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import strikt.api.expectThat
+import strikt.assertions.first
+import strikt.assertions.get
+import strikt.assertions.hasSize
+import strikt.assertions.isTrue
 
 @RunWith(AndroidJUnit4::class)
 class LocalRepositoryTest {
@@ -36,7 +40,7 @@ class LocalRepositoryTest {
     }
 
     @Test
-    fun `saves all movies it gets`() = runBlocking {
+    fun `saves all movies it gets`() = runBlockingTest {
         // Given
         val movies = (1..10).map { movie.copy(id = it.toLong()) }
 
@@ -45,11 +49,11 @@ class LocalRepositoryTest {
         val dbMovies = localRepo.getMovies()
 
         // Then
-        Assert.assertEquals(10, dbMovies.size)
+        expectThat(dbMovies).hasSize(10)
     }
 
     @Test
-    fun `updates isFavorite of existing movies`() = runBlocking {
+    fun `updates isFavorite of existing movies`() = runBlockingTest {
         // Given
         val oldMovies = listOf(movie.copy(id = 1, isFavorite = false))
         val newMovies = listOf(movie.copy(id = 1, isFavorite = true))
@@ -60,11 +64,11 @@ class LocalRepositoryTest {
         val dbMovies = localRepo.getMovies()
 
         // Then
-        Assert.assertEquals(true, dbMovies[0].isFavorite)
+        expectThat(dbMovies)[0].get { isFavorite }.isTrue()
     }
 
     @Test
-    fun `keeps favorite status upon replacing movies`() = runBlocking {
+    fun `keeps favorite status upon replacing movies`() = runBlockingTest {
         // Given
         val oldMovies = listOf(movie.copy(id = 1, isFavorite = true))
         val newMovies = listOf(movie.copy(id = 1, isFavorite = false))
@@ -75,11 +79,11 @@ class LocalRepositoryTest {
         val dbMovies = localRepo.getMovies()
 
         // Then
-        Assert.assertEquals(true, dbMovies[0].isFavorite)
+        expectThat(dbMovies)[0].get { isFavorite }.isTrue()
     }
 
     @Test
-    fun `keeps favorite movies if they're not present in a new list`() = runBlocking {
+    fun `keeps favorite movies if they're not present in a new list`() = runBlockingTest {
         // Given
         val oldMovies = listOf(movie.copy(id = 1, isFavorite = true))
         val newMovies = listOf(movie.copy(id = 2, isFavorite = false))
@@ -90,7 +94,9 @@ class LocalRepositoryTest {
         val dbMovies = localRepo.getMovies()
 
         // Then
-        Assert.assertEquals(2, dbMovies.size)
-        Assert.assertEquals(true, dbMovies.first { it.id == 1L }.isFavorite)
+        expectThat(dbMovies) {
+            hasSize(2)
+            first { it.id == 1L }.get { isFavorite }.isTrue()
+        }
     }
 }
