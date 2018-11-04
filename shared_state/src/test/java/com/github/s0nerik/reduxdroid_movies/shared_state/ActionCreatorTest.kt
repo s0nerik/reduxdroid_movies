@@ -20,8 +20,6 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-private val modules = appModules("com.github.s0nerik.reduxdroid_movies") + testModule()
-
 @RunWith(AndroidJUnit4::class)
 class ActionCreatorTest : AutoCloseKoinTest() {
     @Mock
@@ -34,7 +32,7 @@ class ActionCreatorTest : AutoCloseKoinTest() {
     fun before() {
         MockitoAnnotations.initMocks(this)
 
-        startKoin(modules)
+        startKoin(appModules + testModule())
     }
 
     @Test

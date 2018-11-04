@@ -13,7 +13,7 @@ import me.tatarka.redux.Reducer
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
 
-fun appModules(vararg whitelistPackages: String): List<Module> {
+private fun appModules(vararg whitelistPackages: String): List<Module> {
     val classGraph = ClassGraph().apply {
         enableAllInfo()
         whitelistPackages("com.github.s0nerik.reduxdroid")
@@ -30,6 +30,10 @@ fun appModules(vararg whitelistPackages: String): List<Module> {
     }
 
     return AppModule.registeredModules
+}
+
+val appModules by lazy {
+    appModules("com.github.s0nerik.reduxdroid_movies")
 }
 
 fun testModule(middlewares: () -> List<Middleware<*, *>> = { emptyList() }) = module {
