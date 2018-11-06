@@ -7,7 +7,7 @@ import kotlinx.serialization.Transient
 data class ListDataState<T> internal constructor(
         private val _state: State = State.NONE,
         private val _items: List<T> = emptyList(),
-        val loadingError: String? = null
+        private val _loadingError: String? = null
 ) {
     internal enum class State {
         NONE, LOADING, DATA, REFRESHING, EMPTY, ERROR
@@ -33,6 +33,10 @@ data class ListDataState<T> internal constructor(
     val isRefreshing: Boolean
         get() = _state == State.REFRESHING
 
+    @Transient
+    val loadingError: String?
+        get() = if (_state == State.ERROR) _loadingError else null
+
     //region Loading
     fun loading() = copy(
             _state = State.LOADING
@@ -40,12 +44,13 @@ data class ListDataState<T> internal constructor(
 
     fun successLoading(newItems: List<T>) = copy(
             _state = State.DATA,
-            _items = newItems
+            _items = newItems,
+            _loadingError = null
     )
 
     fun errorLoading(t: Throwable) = copy(
             _state = State.ERROR,
-            loadingError = t.localizedMessage
+            _loadingError = t.localizedMessage
     )
     //endregion
 
@@ -56,12 +61,13 @@ data class ListDataState<T> internal constructor(
 
     fun successRefreshing(newItems: List<T>) = copy(
             _state = State.DATA,
-            _items = newItems
+            _items = newItems,
+            _loadingError = null
     )
 
     fun errorRefreshing(t: Throwable) = copy(
             _state = State.ERROR,
-            loadingError = t.localizedMessage
+            _loadingError = t.localizedMessage
     )
     //endregion
 
