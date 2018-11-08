@@ -2,8 +2,8 @@ package com.github.s0nerik.reduxdroid_movies.repo
 
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.github.s0nerik.reduxdroid.testing.runBlockingTest
 import com.github.s0nerik.reduxdroid_movies.core_test.TestCoroutineContextHolder
-import com.github.s0nerik.reduxdroid_movies.core_test.util.runBlockingTest
 import com.github.s0nerik.reduxdroid_movies.model.Movie
 import com.github.s0nerik.reduxdroid_movies.repo.local.LocalRepository
 import com.github.s0nerik.reduxdroid_movies.repo.local.model.MyObjectBox

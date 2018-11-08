@@ -9,7 +9,7 @@ object Versions {
 
     val objectbox = "2.2.0"
 
-    internal val reduxdroid = "731a1f46b0"
+    internal val reduxdroid = "d8218627b6"
     internal val koin = "1.0.1"
     internal val androidx = "1.0.0"
     internal val androidx_nav = "1.0.0-alpha06"
@@ -122,6 +122,7 @@ object Libs {
 
     //region Testing
     val junit = "junit:junit:4.12"
+    val reduxdroid_testing = "com.github.s0nerik.reduxdroid:testing:${Versions.reduxdroid}"
     val koin_test = "org.koin:koin-test:${Versions.koin}"
     val androidx_test = arrayOf(
             "androidx.test:core:1.0.0",
@@ -134,8 +135,8 @@ object Libs {
 
     val robolectric = "org.robolectric:robolectric:4.0.1"
 
-    val unitTest = arrayOf(junit, *androidx_test, koin_test, robolectric, mockito, strikt)
-    val androidTest = arrayOf(junit, *androidx_test, koin_test, robolectric, mockito, strikt)
+    val unitTest = arrayOf(junit, *androidx_test, koin_test, reduxdroid_testing, robolectric, mockito, strikt)
+    val androidTest = arrayOf(junit, *androidx_test, koin_test, reduxdroid_testing, robolectric, mockito, strikt)
     //endregion
 
     //region Sets

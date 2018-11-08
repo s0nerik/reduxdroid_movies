@@ -1,7 +1,7 @@
 package com.github.s0nerik.reduxdroid_movies.repo
 
+import com.github.s0nerik.reduxdroid.testing.runBlockingTest
 import com.github.s0nerik.reduxdroid_movies.core_test.TestCoroutineContextHolder
-import com.github.s0nerik.reduxdroid_movies.core_test.util.runBlockingTest
 import com.github.s0nerik.reduxdroid_movies.repo.network.MovieDbService
 import com.github.s0nerik.reduxdroid_movies.repo.network.NetworkRepository
 import com.github.s0nerik.reduxdroid_movies.repo.network.model.ApiMovie
