@@ -1,9 +1,9 @@
 package com.github.s0nerik.reduxdroid_movies.repo.network
 
-import com.github.s0nerik.reduxdroid_movies.core.util.CoroutineContextHolder
 import com.github.s0nerik.reduxdroid_movies.model.Movie
 import com.github.s0nerik.reduxdroid_movies.repo.network.model.ApiMoviesPage
 import com.github.s0nerik.reduxdroid_movies.repo.network.util.formatMovieDbDate
+import com.github.s0nerik.reduxdroid_movies.util.CoroutineContextHolder
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import org.joda.time.DateTime

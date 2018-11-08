@@ -1,8 +1,8 @@
 package com.github.s0nerik.reduxdroid_movies.repo.local
 
-import com.github.s0nerik.reduxdroid_movies.core.util.CoroutineContextHolder
 import com.github.s0nerik.reduxdroid_movies.model.Movie
 import com.github.s0nerik.reduxdroid_movies.repo.local.model.DbMovie
+import com.github.s0nerik.reduxdroid_movies.util.CoroutineContextHolder
 import io.objectbox.BoxStore
 import io.objectbox.kotlin.boxFor
 import kotlinx.coroutines.withContext

@@ -1,10 +1,10 @@
 package com.github.s0nerik.reduxdroid_movies.repo
 
 import com.github.debop.kodatimes.months
-import com.github.s0nerik.reduxdroid_movies.core.util.CoroutineContextHolder
 import com.github.s0nerik.reduxdroid_movies.model.Movie
 import com.github.s0nerik.reduxdroid_movies.repo.local.LocalRepository
 import com.github.s0nerik.reduxdroid_movies.repo.network.NetworkRepository
+import com.github.s0nerik.reduxdroid_movies.util.CoroutineContextHolder
 import kotlinx.coroutines.coroutineScope
 import org.joda.time.DateTime
 

@@ -1,7 +1,7 @@
 apply from: "../_module.gradle"
 
 dependencies {
-    implementation project(":core")
+    implementation project(":util")
     implementation Libs.mockito
-    implementation Libs.androidx_test
+    implementation Libs.kotlin_coroutines
 }

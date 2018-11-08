@@ -15,6 +15,7 @@ import com.github.s0nerik.reduxdroid_movies.shared_state.SharedState
 import com.github.s0nerik.reduxdroid_movies.shared_state.loadFilms
 import com.github.s0nerik.reduxdroid_movies.shared_state.share
 import com.github.s0nerik.reduxdroid_movies.shared_state.toggleFavorite
+import com.github.s0nerik.reduxdroid_movies.util.CoroutineContextHolder
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import me.tatarka.bindingcollectionadapter2.itemBindingOf
 

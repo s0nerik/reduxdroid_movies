@@ -3,8 +3,8 @@ package com.github.s0nerik.reduxdroid_movies.core.base
 import com.github.s0nerik.reduxdroid.core.ActionDispatcher
 import com.github.s0nerik.reduxdroid.core.StateStore
 import com.github.s0nerik.reduxdroid.viewmodel.ReduxViewModel
-import com.github.s0nerik.reduxdroid_movies.core.util.CoroutineContextHolder
 import com.github.s0nerik.reduxdroid_movies.core.util.ResourceResolver
+import com.github.s0nerik.reduxdroid_movies.util.CoroutineContextHolder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext

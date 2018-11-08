@@ -9,7 +9,7 @@ import com.github.s0nerik.reduxdroid_movies.auth.AuthState
 import com.github.s0nerik.reduxdroid_movies.auth.FbAction
 import com.github.s0nerik.reduxdroid_movies.core.base.BaseBoundVmNavigationFragment
 import com.github.s0nerik.reduxdroid_movies.core.base.BaseViewModel
-import com.github.s0nerik.reduxdroid_movies.core.util.CoroutineContextHolder
+import com.github.s0nerik.reduxdroid_movies.util.CoroutineContextHolder
 import com.github.s0nerik.reduxdroid_movies.core.util.ResourceResolver
 import com.github.s0nerik.reduxdroid_movies.main.databinding.FragmentMainBinding
 import kotlinx.android.synthetic.main.fragment_main.*

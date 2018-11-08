@@ -1,4 +1,4 @@
-package com.github.s0nerik.reduxdroid_movies.core.util
+package com.github.s0nerik.reduxdroid_movies.util
 
 import kotlin.coroutines.CoroutineContext
 

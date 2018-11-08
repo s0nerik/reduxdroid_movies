@@ -8,8 +8,8 @@ import com.github.s0nerik.reduxdroid.core.StateStore
 import com.github.s0nerik.reduxdroid_movies.auth.databinding.FragmentAuthBinding
 import com.github.s0nerik.reduxdroid_movies.core.base.BaseBoundVmFragment
 import com.github.s0nerik.reduxdroid_movies.core.base.BaseViewModel
-import com.github.s0nerik.reduxdroid_movies.core.util.CoroutineContextHolder
 import com.github.s0nerik.reduxdroid_movies.core.util.ResourceResolver
+import com.github.s0nerik.reduxdroid_movies.util.CoroutineContextHolder
 import org.koin.android.ext.android.inject
 
 class AuthViewModel internal constructor(

@@ -1,6 +1,6 @@
 package com.github.s0nerik.reduxdroid_movies.core_test
 
-import com.github.s0nerik.reduxdroid_movies.core.util.CoroutineContextHolder
+import com.github.s0nerik.reduxdroid_movies.util.CoroutineContextHolder
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 

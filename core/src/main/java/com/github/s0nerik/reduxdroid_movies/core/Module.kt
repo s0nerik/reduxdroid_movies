@@ -11,14 +11,6 @@ import kotlinx.coroutines.Dispatchers
 internal class Module : AppModule({
     single { ResourceResolverImpl(get()) as ResourceResolver }
 
-    single {
-        CoroutineContextHolderImpl(
-                main = Dispatchers.Main,
-                io = Dispatchers.IO,
-                bg = Dispatchers.Default
-        ) as CoroutineContextHolder
-    }
-
     single { IntentActionMiddlewareImpl() as IntentActionMiddleware }
 
     stateSerializer(DateTimeSerializer)

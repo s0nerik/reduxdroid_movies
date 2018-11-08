@@ -13,6 +13,7 @@ import com.github.s0nerik.reduxdroid_movies.films.databinding.FragmentFilmsBindi
 import com.github.s0nerik.reduxdroid_movies.model.Movie
 import com.github.s0nerik.reduxdroid_movies.repo.MovieDbRepository
 import com.github.s0nerik.reduxdroid_movies.shared_state.*
+import com.github.s0nerik.reduxdroid_movies.util.CoroutineContextHolder
 import kotlinx.android.synthetic.main.fragment_films.*
 import me.tatarka.bindingcollectionadapter2.itembindings.OnItemBindClass
 import me.tatarka.bindingcollectionadapter2.map
